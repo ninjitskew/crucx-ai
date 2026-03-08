@@ -1,0 +1,20 @@
+<svg width="800" height="200" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logo-grad-full" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3b82f6" />
+      <stop offset="1" stop-color="#8b5cf6" />
+    </linearGradient>
+  </defs>
+  <!-- Icon -->
+  <rect x="10" y="10" width="80" height="80" rx="18" fill="#0a0a0a" />
+  <rect x="11.25" y="11.25" width="77.5" height="77.5" rx="16.5" stroke="url(#logo-grad-full)" stroke-width="2.5" />
+  <path d="M30 40C30 35 34 30 42 30C46 30 48.5 32 48.5 32" stroke="white" stroke-width="5" stroke-linecap="round" />
+  <path d="M30 60C30 65 34 70 42 70C46 70 48.5 68 48.5 68" stroke="white" stroke-width="5" stroke-linecap="round" />
+  <path d="M30 40L30 60" stroke="white" stroke-width="5" stroke-linecap="round" />
+  <path d="M55 30L72.5 70" stroke="url(#logo-grad-full)" stroke-width="5" stroke-linecap="round" />
+  <path d="M72.5 30L55 70" stroke="url(#logo-grad-full)" stroke-width="5" stroke-linecap="round" />
+  <!-- Text: crucx -->
+  <text x="110" y="62" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="48" font-weight="700" fill="white">crucx</text>
+  <!-- Text: .ai -->
+  <text x="290" y="62" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="48" font-weight="700" fill="#3b82f6">.ai</text>
+</svg>

@@ -2,6 +2,7 @@
 
 import { SITE, FOOTER_LINKS, SOCIAL_LINKS } from "@/lib/constants";
 import { TwitterIcon, LinkedInIcon, InstagramIcon, YouTubeIcon } from "@/components/ui/Icons";
+import Logo from "@/components/ui/Logo";
 
 const socialIcons: Record<string, React.FC<{ className?: string }>> = {
   twitter: TwitterIcon,
@@ -18,11 +19,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-accent-blue to-accent-purple">
-                <span className="font-[family-name:var(--font-space-grotesk)] text-sm font-bold text-white">
-                  cx
-                </span>
-              </div>
+              <Logo size={36} />
               <span className="font-[family-name:var(--font-space-grotesk)] text-xl font-bold text-text-primary">
                 crucx<span className="text-accent-blue">.ai</span>
               </span>

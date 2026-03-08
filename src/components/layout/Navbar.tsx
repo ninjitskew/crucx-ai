@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "@/lib/constants";
 import { MenuIcon, XMarkIcon } from "@/components/ui/Icons";
 import Button from "@/components/ui/Button";
+import Logo from "@/components/ui/Logo";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -31,11 +32,7 @@ export default function Navbar() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-accent-blue to-accent-purple">
-              <span className="font-[family-name:var(--font-space-grotesk)] text-sm font-bold text-white">
-                cx
-              </span>
-            </div>
+            <Logo size={36} />
             <span className="font-[family-name:var(--font-space-grotesk)] text-xl font-bold text-text-primary">
               crucx<span className="text-accent-blue">.ai</span>
             </span>
