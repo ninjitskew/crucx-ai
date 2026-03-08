@@ -6,6 +6,7 @@ import Features from "@/components/sections/Features";
 import Pricing from "@/components/sections/Pricing";
 import Testimonials from "@/components/sections/Testimonials";
 import Waitlist from "@/components/sections/Waitlist";
+import BackToTop from "@/components/ui/BackToTop";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <Waitlist />
       </main>
       <Footer />
+      <BackToTop />
     </>
   );
 }
