@@ -266,7 +266,7 @@ export default function Waitlist() {
               {/* Submit */}
               <div className="mt-6">
                 <Button type="submit" className="w-full" size="lg" disabled={loading}>
-                  {loading ? "Submitting..." : "Join the Waitlist"}
+                  {loading ? "Submitting..." : "Submit"}
                 </Button>
               </div>
 

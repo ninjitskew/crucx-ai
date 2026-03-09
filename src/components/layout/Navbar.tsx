@@ -6,10 +6,12 @@ import { NAV_LINKS } from "@/lib/constants";
 import { MenuIcon, XMarkIcon } from "@/components/ui/Icons";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/ui/Logo";
+import AuthModal from "@/components/ui/AuthModal";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -51,8 +53,11 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:block">
+          {/* Desktop CTAs */}
+          <div className="hidden items-center gap-3 md:flex">
+            <Button variant="ghost" size="sm" onClick={() => setAuthOpen(true)}>
+              Login
+            </Button>
             <Button href="#waitlist" size="sm">
               Join Waitlist
             </Button>
@@ -90,6 +95,15 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  setAuthOpen(true);
+                }}
+                className="text-2xl text-text-secondary transition-colors hover:text-text-primary"
+              >
+                Login
+              </button>
               <Button href="#waitlist" size="lg" onClick={() => setMobileOpen(false)}>
                 Join Waitlist
               </Button>
@@ -97,6 +111,9 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Auth Modal */}
+      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>
   );
 }
