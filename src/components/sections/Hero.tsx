@@ -89,7 +89,7 @@ export default function Hero() {
             {HERO_STATS.map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="font-[family-name:var(--font-space-grotesk)] text-4xl font-bold text-text-primary">
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                  <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
                 </div>
                 <div className="mt-1 text-sm text-text-secondary">{stat.label}</div>
               </div>

@@ -17,6 +17,7 @@ export const HERO_STATS = [
   { label: "Authors Onboarded", value: 500, suffix: "+" },
   { label: "Books Published", value: 1200, suffix: "+" },
   { label: "Countries Reached", value: 30, suffix: "+" },
+  { label: "Turnover", value: 5, prefix: "INR ", suffix: " Mn" },
 ];
 
 export const STEPS = [

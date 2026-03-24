@@ -5,12 +5,14 @@ import { useInView } from "framer-motion";
 
 interface AnimatedCounterProps {
   value: number;
+  prefix?: string;
   suffix?: string;
   duration?: number;
 }
 
 export default function AnimatedCounter({
   value,
+  prefix = "",
   suffix = "",
   duration = 2000,
 }: AnimatedCounterProps) {
@@ -42,7 +44,7 @@ export default function AnimatedCounter({
 
   return (
     <span ref={ref} className="tabular-nums">
-      {count.toLocaleString()}
+      {prefix}{count.toLocaleString()}
       {suffix}
     </span>
   );
