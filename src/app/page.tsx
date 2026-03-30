@@ -1,11 +1,11 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
-import HowItWorks from "@/components/sections/HowItWorks";
-import Features from "@/components/sections/Features";
+import CreatorPath from "@/components/sections/CreatorPath";
+import MarketplacePath from "@/components/sections/MarketplacePath";
 import Pricing from "@/components/sections/Pricing";
 import Testimonials from "@/components/sections/Testimonials";
-import Waitlist from "@/components/sections/Waitlist";
+import DualCTA from "@/components/sections/DualCTA";
 import BackToTop from "@/components/ui/BackToTop";
 
 export default function Home() {
@@ -14,11 +14,11 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <HowItWorks />
-        <Features />
+        <CreatorPath />
+        <MarketplacePath />
         <Pricing />
         <Testimonials />
-        <Waitlist />
+        <DualCTA />
       </main>
       <Footer />
       <BackToTop />

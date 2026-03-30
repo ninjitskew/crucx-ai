@@ -11,11 +11,18 @@ const socialIcons: Record<string, React.FC<{ className?: string }>> = {
   youtube: YouTubeIcon,
 };
 
+const linkSections = [
+  { title: "Product", links: FOOTER_LINKS.product },
+  { title: "Company", links: FOOTER_LINKS.company },
+  { title: "Support", links: FOOTER_LINKS.support },
+  { title: "Legal", links: FOOTER_LINKS.legal },
+];
+
 export default function Footer() {
   return (
     <footer className="border-t border-border-default bg-bg-primary">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-5">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-6">
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2">
@@ -47,62 +54,26 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Product */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text-primary">
-              Product
-            </h3>
-            <ul className="space-y-3">
-              {FOOTER_LINKS.product.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-text-secondary transition-colors hover:text-text-primary"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text-primary">
-              Company
-            </h3>
-            <ul className="space-y-3">
-              {FOOTER_LINKS.company.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-text-secondary transition-colors hover:text-text-primary"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text-primary">
-              Legal
-            </h3>
-            <ul className="space-y-3">
-              {FOOTER_LINKS.legal.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-text-secondary transition-colors hover:text-text-primary"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Link columns */}
+          {linkSections.map((section) => (
+            <div key={section.title}>
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text-primary">
+                {section.title}
+              </h3>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-text-secondary transition-colors hover:text-text-primary"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         {/* Bottom bar */}

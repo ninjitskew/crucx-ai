@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
-@theme {
+/* ============================================
+   CRUCX.AI DUAL-THEME DESIGN SYSTEM
+   Dark mode (default) + Light mode
+   ============================================ */
+
+/* --- Dark Theme (default) --- */
+:root {
   --color-bg-primary: #0a0a0a;
   --color-bg-secondary: #111111;
   --color-bg-card: #161616;
@@ -16,6 +22,40 @@
   --color-text-muted: #71717a;
 
   --color-border-default: #27272a;
+  --color-border-glow: #3b82f6;
+}
+
+/* --- Light Theme --- */
+html.light {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f4f4f5;
+  --color-bg-card: #ffffff;
+  --color-bg-card-hover: #fafafa;
+
+  --color-text-primary: #18181b;
+  --color-text-secondary: #52525b;
+  --color-text-muted: #a1a1aa;
+
+  --color-border-default: #e4e4e7;
+  --color-border-glow: #3b82f6;
+}
+
+@theme {
+  --color-bg-primary: var(--color-bg-primary);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-card: var(--color-bg-card);
+  --color-bg-card-hover: var(--color-bg-card-hover);
+
+  --color-accent-blue: #3b82f6;
+  --color-accent-purple: #8b5cf6;
+  --color-accent-cyan: #06b6d4;
+  --color-accent-pink: #ec4899;
+
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+
+  --color-border-default: var(--color-border-default);
   --color-border-glow: #3b82f6;
 
   --font-heading: "Space Grotesk", sans-serif;
@@ -80,22 +120,23 @@ html {
 }
 
 body {
-  background-color: #0a0a0a;
-  color: #ffffff;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
   font-family: var(--font-body);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Scrollbar */
+/* Scrollbar - dark */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: var(--color-bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: var(--color-border-default);
   border-radius: 3px;
 }
 
@@ -106,5 +147,10 @@ body {
 /* Selection */
 ::selection {
   background: rgba(59, 130, 246, 0.3);
-  color: #ffffff;
+  color: var(--color-text-primary);
+}
+
+/* Light mode overrides for gradient mesh */
+html.light .gradient-mesh-blob {
+  opacity: 0.08;
 }

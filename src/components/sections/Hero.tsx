@@ -1,101 +1,163 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SITE, HERO_STATS } from "@/lib/constants";
+import { HERO_AUTHOR, HERO_MARKETPLACE, HERO_STATS } from "@/lib/constants";
 import Button from "@/components/ui/Button";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import GradientMesh from "@/components/ui/GradientMesh";
-import { ArrowRightIcon } from "@/components/ui/Icons";
+import { ArrowRightIcon, BookOpenIcon, UploadIcon } from "@/components/ui/Icons";
+
+function HeroPath({
+  data,
+  side,
+  icon,
+  accentFrom,
+  accentTo,
+}: {
+  data: typeof HERO_AUTHOR;
+  side: "left" | "right";
+  icon: React.ReactNode;
+  accentFrom: string;
+  accentTo: string;
+}) {
+  const delay = side === "left" ? 0.3 : 0.5;
+
+  return (
+    <motion.div
+      className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left"
+      initial={{ opacity: 0, x: side === "left" ? -30 : 30 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.7, delay }}
+    >
+      {/* Badge */}
+      <div
+        className={`mb-5 inline-flex items-center gap-2 rounded-full border border-border-default bg-bg-card/50 px-4 py-2 text-sm backdrop-blur-sm`}
+      >
+        {icon}
+        <span className="text-text-secondary">{data.badge}</span>
+      </div>
+
+      {/* Headline */}
+      <h2
+        className={`font-[family-name:var(--font-space-grotesk)] text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl`}
+      >
+        <span className={`bg-gradient-to-r ${accentFrom} ${accentTo} bg-clip-text text-transparent`}>
+          {data.headline}
+        </span>
+      </h2>
+
+      {/* Subheadline */}
+      <p className="mt-4 max-w-md text-base leading-relaxed text-text-secondary">
+        {data.subheadline}
+      </p>
+
+      {/* CTA */}
+      <div className="mt-6">
+        <Button href={data.ctaHref} size="lg">
+          {data.cta}
+          <ArrowRightIcon className="ml-2 h-5 w-5" />
+        </Button>
+      </div>
+
+      {/* Stats */}
+      <div className="mt-8 flex gap-8">
+        {data.stats.map((stat) => (
+          <div key={stat.label}>
+            <div className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold text-text-primary sm:text-3xl">
+              <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
+            </div>
+            <div className="mt-1 text-xs text-text-muted">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Hero() {
-  const words = SITE.tagline.split(" ");
-
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden pt-20">
       <GradientMesh />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl text-center">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-border-default bg-white/5 px-4 py-2 text-sm text-text-secondary backdrop-blur-sm"
-          >
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        {/* Main tagline */}
+        <motion.div
+          className="mb-12 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border-default bg-bg-card/50 px-4 py-2 text-sm text-text-secondary backdrop-blur-sm">
             <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
             Now accepting early access applications
-          </motion.div>
-
-          {/* Headline */}
-          <h1 className="font-[family-name:var(--font-space-grotesk)] text-5xl font-bold leading-tight tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
-            {words.map((word, i) => (
-              <motion.span
-                key={i}
-                className={`inline-block ${
-                  i === words.length - 1
-                    ? "bg-gradient-to-r from-accent-blue via-accent-purple to-accent-cyan bg-clip-text text-transparent"
-                    : "text-text-primary"
-                }`}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.4 + i * 0.15,
-                  ease: "easeOut",
-                }}
-              >
-                {word}
-                {i < words.length - 1 && "\u00A0"}
-              </motion.span>
-            ))}
+          </div>
+          <h1 className="font-[family-name:var(--font-space-grotesk)] text-4xl font-bold leading-tight tracking-tight text-text-primary sm:text-5xl md:text-6xl">
+            One Platform for{" "}
+            <span className="bg-gradient-to-r from-accent-blue to-accent-purple bg-clip-text text-transparent">
+              Authors
+            </span>{" "}
+            &{" "}
+            <span className="bg-gradient-to-r from-accent-purple to-accent-pink bg-clip-text text-transparent">
+              Readers
+            </span>
           </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-text-secondary">
+            Publish your books with AI-powered tools or discover your next great read.
+            Two paths, one platform.
+          </p>
+        </motion.div>
 
-          {/* Subheading */}
-          <motion.p
-            className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary sm:text-xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1 }}
-          >
-            Your virtual publishing house. From raw ideas to published books on
-            Amazon KDP, YouTube, TikTok Shop and more — we handle everything,
-            you earn royalties.
-          </motion.p>
-
-          {/* CTAs */}
+        {/* 50/50 Split */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+          {/* Left: Author Path */}
           <motion.div
-            className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
-          >
-            <Button href="#waitlist" size="lg">
-              Join the Waitlist
-              <ArrowRightIcon className="ml-2 h-5 w-5" />
-            </Button>
-            <Button href="#how-it-works" variant="secondary" size="lg">
-              See How It Works
-            </Button>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-3"
+            className="rounded-2xl border border-border-default bg-bg-card/30 p-6 backdrop-blur-sm sm:p-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.5 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
-            {HERO_STATS.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="font-[family-name:var(--font-space-grotesk)] text-4xl font-bold text-text-primary">
-                  <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
-                </div>
-                <div className="mt-1 text-sm text-text-secondary">{stat.label}</div>
-              </div>
-            ))}
+            <HeroPath
+              data={HERO_AUTHOR}
+              side="left"
+              icon={<UploadIcon className="h-4 w-4 text-accent-blue" />}
+              accentFrom="from-accent-blue"
+              accentTo="to-accent-cyan"
+            />
+          </motion.div>
+
+          {/* Right: Marketplace Path */}
+          <motion.div
+            className="rounded-2xl border border-border-default bg-bg-card/30 p-6 backdrop-blur-sm sm:p-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <HeroPath
+              data={HERO_MARKETPLACE}
+              side="right"
+              icon={<BookOpenIcon className="h-4 w-4 text-accent-purple" />}
+              accentFrom="from-accent-purple"
+              accentTo="to-accent-pink"
+            />
           </motion.div>
         </div>
+
+        {/* Bottom stats bar */}
+        <motion.div
+          className="mt-16 grid grid-cols-2 gap-6 sm:grid-cols-4"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          {HERO_STATS.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="font-[family-name:var(--font-space-grotesk)] text-3xl font-bold text-text-primary sm:text-4xl">
+                <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
+              </div>
+              <div className="mt-1 text-sm text-text-secondary">{stat.label}</div>
+            </div>
+          ))}
+        </motion.div>
       </div>
 
       {/* Bottom fade */}

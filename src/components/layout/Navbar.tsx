@@ -6,6 +6,7 @@ import { NAV_LINKS } from "@/lib/constants";
 import { MenuIcon, XMarkIcon } from "@/components/ui/Icons";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/ui/Logo";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import AuthModal from "@/components/ui/AuthModal";
 
 export default function Navbar() {
@@ -55,22 +56,26 @@ export default function Navbar() {
 
           {/* Desktop CTAs */}
           <div className="hidden items-center gap-3 md:flex">
+            <ThemeToggle />
             <Button variant="ghost" size="sm" onClick={() => setAuthOpen(true)}>
               Login
             </Button>
             <Button href="#waitlist" size="sm">
-              Join Waitlist
+              Get Started
             </Button>
           </div>
 
           {/* Mobile menu button */}
-          <button
-            className="text-text-primary md:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <XMarkIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
-          </button>
+          <div className="flex items-center gap-3 md:hidden">
+            <ThemeToggle />
+            <button
+              className="text-text-primary"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <XMarkIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
       </motion.nav>
 
@@ -105,7 +110,7 @@ export default function Navbar() {
                 Login
               </button>
               <Button href="#waitlist" size="lg" onClick={() => setMobileOpen(false)}>
-                Join Waitlist
+                Get Started
               </Button>
             </div>
           </motion.div>

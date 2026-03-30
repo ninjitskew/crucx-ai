@@ -13,24 +13,25 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "crucx.ai — Publish. Earn. Repeat.",
+  title: "crucx.ai — Create. Discover. Publish.",
   description:
-    "Your virtual publishing house. From raw ideas to published books on Amazon KDP, YouTube, TikTok Shop and more. We handle ghostwriting, publishing, and marketplace optimization — you earn royalties.",
+    "The content-to-commerce platform for authors and readers. Publish your books with AI-powered tools or discover your next favorite read in our marketplace.",
   keywords: [
     "self publishing",
     "book publishing",
+    "book marketplace",
     "amazon kdp",
     "ghostwriting",
-    "royalties",
-    "publish a book",
+    "buy books online",
+    "ebooks",
     "content to commerce",
     "crucx",
   ],
   authors: [{ name: "crucx.ai" }],
   openGraph: {
-    title: "crucx.ai — Publish. Earn. Repeat.",
+    title: "crucx.ai — Create. Discover. Publish.",
     description:
-      "Your virtual publishing house. From raw ideas to published books — we handle everything, you earn royalties.",
+      "The content-to-commerce platform for authors and readers. Publish or discover books on crucx.ai.",
     url: "https://crucx.ai",
     siteName: "crucx.ai",
     type: "website",
@@ -38,9 +39,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "crucx.ai — Publish. Earn. Repeat.",
+    title: "crucx.ai — Create. Discover. Publish.",
     description:
-      "Your virtual publishing house. From raw ideas to published books — we handle everything, you earn royalties.",
+      "The content-to-commerce platform for authors and readers. Publish or discover books on crucx.ai.",
     creator: "@crucxai",
   },
   robots: {
@@ -49,13 +50,26 @@ export const metadata: Metadata = {
   },
 };
 
+// FOUC prevention: reads theme from localStorage before paint
+const themeScript = `
+(function() {
+  try {
+    var t = localStorage.getItem('crucx-theme');
+    if (t === 'light') document.documentElement.classList.add('light');
+  } catch(e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} font-[family-name:var(--font-inter)] antialiased`}
       >

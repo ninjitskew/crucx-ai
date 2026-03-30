@@ -1,17 +1,52 @@
 export const SITE = {
   name: "crucx.ai",
-  tagline: "Publish. Earn. Repeat.",
+  tagline: "Create. Discover. Publish.",
   description:
-    "Your virtual publishing house. From raw ideas to published books on Amazon KDP, YouTube, TikTok Shop and more. We handle ghostwriting, publishing, and marketplace optimization — you earn royalties.",
+    "The content-to-commerce platform for authors and readers. Publish your books with AI-powered tools or discover your next favorite read in our marketplace.",
   url: "https://crucx.ai",
 };
 
 export const NAV_LINKS = [
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Features", href: "#features" },
+  { label: "For Authors", href: "#for-authors" },
+  { label: "Marketplace", href: "#marketplace" },
   { label: "Pricing", href: "#pricing" },
   { label: "Testimonials", href: "#testimonials" },
 ];
+
+// ===== HERO SECTION (50/50 Split) =====
+
+export interface HeroStat {
+  label: string;
+  value: number;
+  suffix?: string;
+  prefix?: string;
+}
+
+export const HERO_AUTHOR = {
+  badge: "For Authors & Creators",
+  headline: "Publish Your Book",
+  subheadline:
+    "From raw ideas to published books. AI-powered ghostwriting, formatting, and multi-marketplace publishing — you earn royalties.",
+  cta: "Start Publishing",
+  ctaHref: "#for-authors",
+  stats: [
+    { label: "Authors", value: 500, suffix: "+" },
+    { label: "Books Published", value: 1200, suffix: "+" },
+  ] as HeroStat[],
+};
+
+export const HERO_MARKETPLACE = {
+  badge: "For Readers & Buyers",
+  headline: "Discover Great Reads",
+  subheadline:
+    "Explore curated books across genres. From bestsellers to hidden gems — find your next favorite read at the best prices.",
+  cta: "Browse Marketplace",
+  ctaHref: "#marketplace",
+  stats: [
+    { label: "Books Available", value: 5000, suffix: "+" },
+    { label: "Categories", value: 30, suffix: "+" },
+  ] as HeroStat[],
+};
 
 export const HERO_STATS = [
   { label: "Authors Onboarded", value: 500, suffix: "+" },
@@ -20,7 +55,9 @@ export const HERO_STATS = [
   { label: "Turnover", value: 5, prefix: "INR ", suffix: " Mn" },
 ];
 
-export const STEPS = [
+// ===== CREATOR PATH =====
+
+export const CREATOR_STEPS = [
   {
     step: "01",
     title: "Write",
@@ -44,7 +81,7 @@ export const STEPS = [
   },
 ];
 
-export const FEATURES = [
+export const CREATOR_FEATURES = [
   {
     title: "AI-Powered Ghostwriting",
     description:
@@ -63,25 +100,96 @@ export const FEATURES = [
       "Real-time earnings tracking, marketplace analytics, and performance insights in one view.",
     icon: "chart-bar",
   },
+];
+
+export const CREATOR_DASHBOARD_STATS = [
+  { label: "Total Earnings", value: "$12,450", trend: "+24%", icon: "chart" },
+  { label: "Books Published", value: "8", trend: "+2", icon: "book" },
+  { label: "Monthly Readers", value: "3.2K", trend: "+18%", icon: "user" },
+  { label: "Avg. Rating", value: "4.7", trend: "+0.3", icon: "star" },
+];
+
+// ===== MARKETPLACE PATH =====
+
+export const MARKETPLACE_CATEGORIES = [
+  "All",
+  "Fiction",
+  "Non-Fiction",
+  "Self-Help",
+  "Romance",
+  "Mystery",
+  "Sci-Fi",
+  "Business",
+  "Children's",
+  "Poetry",
+];
+
+export const MARKETPLACE_BOOKS = [
   {
-    title: "Social Promotion Engine",
-    description:
-      "Leverage our social channels and tools to boost your book's visibility and sales.",
-    icon: "megaphone",
+    title: "The Midnight Library",
+    author: "Sarah Mitchell",
+    genre: "Fiction",
+    price: 12.99,
+    originalPrice: 16.99,
+    rating: 4.8,
+    reviews: 342,
+    cover: "gradient-1",
+    bestseller: true,
   },
   {
-    title: "Smart Optimization",
-    description:
-      "AI-driven tips to improve your marketplace ranking, pricing strategy, and cover appeal.",
-    icon: "lightbulb",
+    title: "Atomic Habits for Creators",
+    author: "James Okoro",
+    genre: "Self-Help",
+    price: 9.99,
+    rating: 4.9,
+    reviews: 891,
+    cover: "gradient-2",
+    bestseller: true,
   },
   {
-    title: "Personal Author Hub",
-    description:
-      "Your own virtual setup to manage all publications, pen names, and marketplace presence.",
-    icon: "user",
+    title: "The Dragon's Promise",
+    author: "Priya Sharma",
+    genre: "Fiction",
+    price: 14.99,
+    rating: 4.6,
+    reviews: 156,
+    cover: "gradient-3",
+    bestseller: false,
+  },
+  {
+    title: "Digital Nomad Finance",
+    author: "Alex Chen",
+    genre: "Business",
+    price: 11.99,
+    originalPrice: 19.99,
+    rating: 4.5,
+    reviews: 234,
+    cover: "gradient-4",
+    bestseller: false,
+  },
+  {
+    title: "Whispers in the Rain",
+    author: "Maya Rodriguez",
+    genre: "Romance",
+    price: 8.99,
+    rating: 4.7,
+    reviews: 567,
+    cover: "gradient-5",
+    bestseller: true,
+  },
+  {
+    title: "The AI Playbook",
+    author: "David Park",
+    genre: "Business",
+    price: 0,
+    rating: 4.4,
+    reviews: 128,
+    cover: "gradient-6",
+    bestseller: false,
   },
 ];
+
+// ===== PRICING =====
 
 export interface PricingTier {
   name: string;
@@ -157,6 +265,8 @@ export const PRICING_TIERS: PricingTier[] = [
   },
 ];
 
+// ===== TESTIMONIALS (dual-path) =====
+
 export const TESTIMONIALS = [
   {
     name: "Sarah Mitchell",
@@ -164,7 +274,17 @@ export const TESTIMONIALS = [
     quote:
       "crucx.ai turned my scattered notes into a bestselling romance novel. The ghostwriting team understood my voice perfectly.",
     avatar: "SM",
-    books: 3,
+    type: "author" as const,
+    metric: "3 books published",
+  },
+  {
+    name: "Rohit Menon",
+    role: "Avid Reader",
+    quote:
+      "I discovered my favorite self-help book on crucx.ai that I couldn't find anywhere else. The recommendations are spot-on.",
+    avatar: "RM",
+    type: "reader" as const,
+    metric: "47 books purchased",
   },
   {
     name: "James Okoro",
@@ -172,7 +292,17 @@ export const TESTIMONIALS = [
     quote:
       "I went from zero to 5 published books in 4 months. The royalty dashboard makes it easy to track everything.",
     avatar: "JO",
-    books: 5,
+    type: "author" as const,
+    metric: "5 books published",
+  },
+  {
+    name: "Ananya Desai",
+    role: "Book Club Organizer",
+    quote:
+      "Our book club finds all our monthly picks on crucx.ai. The genre filters and ratings make choosing so easy.",
+    avatar: "AD",
+    type: "reader" as const,
+    metric: "12 books monthly",
   },
   {
     name: "Priya Sharma",
@@ -180,9 +310,21 @@ export const TESTIMONIALS = [
     quote:
       "Publishing on multiple marketplaces used to be a nightmare. crucx.ai handles it all — I just focus on creating stories.",
     avatar: "PS",
-    books: 8,
+    type: "author" as const,
+    metric: "8 books published",
+  },
+  {
+    name: "Kevin Tran",
+    role: "Student",
+    quote:
+      "The free books section is incredible. Found textbook alternatives and indie authors I never would have discovered otherwise.",
+    avatar: "KT",
+    type: "reader" as const,
+    metric: "30+ free books",
   },
 ];
+
+// ===== WAITLIST =====
 
 export const GENRES = [
   "Fiction",
@@ -206,16 +348,23 @@ export const BOOK_PLANS = [
   "12+ books",
 ];
 
+// ===== FOOTER =====
+
 export const FOOTER_LINKS = {
   product: [
-    { label: "Features", href: "#features" },
+    { label: "For Authors", href: "#for-authors" },
+    { label: "Marketplace", href: "#marketplace" },
     { label: "Pricing", href: "#pricing" },
-    { label: "How It Works", href: "#how-it-works" },
   ],
   company: [
     { label: "About", href: "#" },
     { label: "Blog", href: "#" },
     { label: "Careers", href: "#" },
+  ],
+  support: [
+    { label: "Help Center", href: "#" },
+    { label: "Contact Us", href: "#" },
+    { label: "FAQ", href: "#" },
   ],
   legal: [
     { label: "Privacy Policy", href: "#" },

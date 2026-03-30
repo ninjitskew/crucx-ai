@@ -1,3 +1,5 @@
+"use client";
+
 interface LogoProps {
   size?: number;
 }
@@ -24,7 +26,7 @@ export default function Logo({ size = 36 }: LogoProps) {
           <stop offset="1" stopColor="#8b5cf6" />
         </linearGradient>
       </defs>
-      <rect width="64" height="64" rx="14" fill="#0a0a0a" />
+      <rect width="64" height="64" rx="14" className="fill-bg-primary" />
       <rect
         x="1"
         y="1"
@@ -37,19 +39,19 @@ export default function Logo({ size = 36 }: LogoProps) {
       {/* C letter */}
       <path
         d="M16 24C16 20 19 16 25 16C28 16 30 17.5 30 17.5"
-        stroke="white"
+        className="stroke-text-primary"
         strokeWidth="4"
         strokeLinecap="round"
       />
       <path
         d="M16 40C16 44 19 48 25 48C28 48 30 46.5 30 46.5"
-        stroke="white"
+        className="stroke-text-primary"
         strokeWidth="4"
         strokeLinecap="round"
       />
       <path
         d="M16 24L16 40"
-        stroke="white"
+        className="stroke-text-primary"
         strokeWidth="4"
         strokeLinecap="round"
       />

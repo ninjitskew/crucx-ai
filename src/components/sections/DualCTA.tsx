@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { GENRES, BOOK_PLANS } from "@/lib/constants";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
-import { CheckIcon } from "@/components/ui/Icons";
+import { CheckIcon, ArrowRightIcon, UploadIcon, ShoppingBagIcon } from "@/components/ui/Icons";
 
 interface FormData {
   name: string;
@@ -13,6 +13,7 @@ interface FormData {
   genre: string;
   booksPlanned: string;
   message: string;
+  userType: "author" | "reader";
 }
 
 interface FormErrors {
@@ -22,13 +23,14 @@ interface FormErrors {
   booksPlanned?: string;
 }
 
-export default function Waitlist() {
+export default function DualCTA() {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     genre: "",
     booksPlanned: "",
     message: "",
+    userType: "author",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
@@ -42,8 +44,10 @@ export default function Waitlist() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email";
     }
-    if (!formData.genre) newErrors.genre = "Please select a genre";
-    if (!formData.booksPlanned) newErrors.booksPlanned = "Please select an option";
+    if (formData.userType === "author") {
+      if (!formData.genre) newErrors.genre = "Please select a genre";
+      if (!formData.booksPlanned) newErrors.booksPlanned = "Please select an option";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -56,7 +60,6 @@ export default function Waitlist() {
     try {
       const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL;
       if (!GOOGLE_SCRIPT_URL) {
-        // Fallback: show success even without backend configured
         setSubmitted(true);
         return;
       }
@@ -71,13 +74,12 @@ export default function Waitlist() {
           genre: formData.genre,
           booksPlanned: formData.booksPlanned,
           message: formData.message,
+          userType: formData.userType,
           timestamp: new Date().toISOString(),
         }),
       });
-      // With no-cors mode, we can't read the response, so assume success
       setSubmitted(true);
     } catch {
-      // Still show success to user — the form data may have been received
       setSubmitted(true);
     } finally {
       setLoading(false);
@@ -100,7 +102,7 @@ export default function Waitlist() {
 
   return (
     <SectionWrapper id="waitlist">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-3xl">
         {/* Header */}
         <div className="mb-12 text-center">
           <motion.p
@@ -127,8 +129,8 @@ export default function Waitlist() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            Be among the first to experience the future of self-publishing. Early
-            members get exclusive perks.
+            Whether you want to publish or discover books — be among the first to
+            experience crucx.ai.
           </motion.p>
         </div>
 
@@ -162,6 +164,39 @@ export default function Waitlist() {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
+              {/* User type toggle */}
+              <div className="relative mb-6 flex rounded-xl bg-bg-secondary p-1">
+                <motion.div
+                  className="absolute top-1 bottom-1 rounded-lg bg-gradient-to-r from-accent-blue to-accent-purple"
+                  layout
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  style={{
+                    left: formData.userType === "author" ? "4px" : "50%",
+                    width: "calc(50% - 4px)",
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setFormData((prev) => ({ ...prev, userType: "author" }))}
+                  className={`relative z-10 flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-medium transition-colors ${
+                    formData.userType === "author" ? "text-white" : "text-text-muted hover:text-text-secondary"
+                  }`}
+                >
+                  <UploadIcon className="h-4 w-4" />
+                  I want to publish
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData((prev) => ({ ...prev, userType: "reader" }))}
+                  className={`relative z-10 flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-medium transition-colors ${
+                    formData.userType === "reader" ? "text-white" : "text-text-muted hover:text-text-secondary"
+                  }`}
+                >
+                  <ShoppingBagIcon className="h-4 w-4" />
+                  I want to read
+                </button>
+              </div>
+
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 {/* Name */}
                 <div>
@@ -197,66 +232,95 @@ export default function Waitlist() {
                   {errors.email && <p className={errorClasses}>{errors.email}</p>}
                 </div>
 
-                {/* Genre */}
-                <div>
-                  <label htmlFor="genre" className="mb-1.5 block text-sm text-text-secondary">
-                    Genre / Niche *
-                  </label>
-                  <select
-                    id="genre"
-                    name="genre"
-                    value={formData.genre}
-                    onChange={handleChange}
-                    className={inputClasses}
-                  >
-                    <option value="">Select a genre</option>
-                    {GENRES.map((g) => (
-                      <option key={g} value={g}>
-                        {g}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.genre && <p className={errorClasses}>{errors.genre}</p>}
-                </div>
+                {/* Author-specific fields */}
+                {formData.userType === "author" && (
+                  <>
+                    <div>
+                      <label htmlFor="genre" className="mb-1.5 block text-sm text-text-secondary">
+                        Genre / Niche *
+                      </label>
+                      <select
+                        id="genre"
+                        name="genre"
+                        value={formData.genre}
+                        onChange={handleChange}
+                        className={inputClasses}
+                      >
+                        <option value="">Select a genre</option>
+                        {GENRES.map((g) => (
+                          <option key={g} value={g}>
+                            {g}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.genre && <p className={errorClasses}>{errors.genre}</p>}
+                    </div>
 
-                {/* Books planned */}
-                <div>
-                  <label
-                    htmlFor="booksPlanned"
-                    className="mb-1.5 block text-sm text-text-secondary"
-                  >
-                    Books you plan to publish *
-                  </label>
-                  <select
-                    id="booksPlanned"
-                    name="booksPlanned"
-                    value={formData.booksPlanned}
-                    onChange={handleChange}
-                    className={inputClasses}
-                  >
-                    <option value="">Select</option>
-                    {BOOK_PLANS.map((p) => (
-                      <option key={p} value={p}>
-                        {p}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.booksPlanned && (
-                    <p className={errorClasses}>{errors.booksPlanned}</p>
-                  )}
-                </div>
+                    <div>
+                      <label htmlFor="booksPlanned" className="mb-1.5 block text-sm text-text-secondary">
+                        Books you plan to publish *
+                      </label>
+                      <select
+                        id="booksPlanned"
+                        name="booksPlanned"
+                        value={formData.booksPlanned}
+                        onChange={handleChange}
+                        className={inputClasses}
+                      >
+                        <option value="">Select</option>
+                        {BOOK_PLANS.map((p) => (
+                          <option key={p} value={p}>
+                            {p}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.booksPlanned && (
+                        <p className={errorClasses}>{errors.booksPlanned}</p>
+                      )}
+                    </div>
+                  </>
+                )}
+
+                {/* Reader-specific: favorite genres (reuse genre select) */}
+                {formData.userType === "reader" && (
+                  <div className="sm:col-span-2">
+                    <label htmlFor="genre" className="mb-1.5 block text-sm text-text-secondary">
+                      Favorite Genre (optional)
+                    </label>
+                    <select
+                      id="genre"
+                      name="genre"
+                      value={formData.genre}
+                      onChange={handleChange}
+                      className={inputClasses}
+                    >
+                      <option value="">Select a genre</option>
+                      {GENRES.map((g) => (
+                        <option key={g} value={g}>
+                          {g}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
 
               {/* Message */}
               <div className="mt-5">
                 <label htmlFor="message" className="mb-1.5 block text-sm text-text-secondary">
-                  Tell us about your book idea (optional)
+                  {formData.userType === "author"
+                    ? "Tell us about your book idea (optional)"
+                    : "What kind of books are you looking for? (optional)"}
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   rows={3}
-                  placeholder="I have an idea for a self-help book about..."
+                  placeholder={
+                    formData.userType === "author"
+                      ? "I have an idea for a self-help book about..."
+                      : "I'm looking for books about..."
+                  }
                   value={formData.message}
                   onChange={handleChange}
                   className={`${inputClasses} resize-none`}
@@ -267,6 +331,7 @@ export default function Waitlist() {
               <div className="mt-6">
                 <Button type="submit" className="w-full" size="lg" disabled={loading}>
                   {loading ? "Submitting..." : "Submit"}
+                  {!loading && <ArrowRightIcon className="ml-2 h-5 w-5" />}
                 </Button>
               </div>
 
