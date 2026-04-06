@@ -24,9 +24,10 @@ export default async function BooksPage({
       <h1 className="mb-8 text-4xl font-bold text-text-primary">Marketplace</h1>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((b) => (
-          <article
+          <Link
             key={b.slug}
-            className="rounded-2xl border border-border-default bg-bg-card p-6"
+            href={`/books/${b.slug}`}
+            className="rounded-2xl border border-border-default bg-bg-card p-6 transition hover:border-accent-primary"
           >
             <div className="mb-3 aspect-[3/4] rounded-lg bg-bg-secondary" />
             <h2 className="text-base font-semibold text-text-primary">
@@ -39,14 +40,14 @@ export default async function BooksPage({
             <p className="mt-3 text-sm font-semibold text-accent-primary">
               ₹{b.price}
             </p>
-          </article>
+          </Link>
         ))}
       </div>
       <nav className="mt-12 flex items-center justify-center gap-2">
         {pageRange(totalPages).map((p) => (
           <Link
             key={p}
-            href={`/books/${p}`}
+            href={p === 1 ? "/books" : `/books/page/${p}`}
             className={`rounded-lg px-4 py-2 text-sm ${
               p === pageNum
                 ? "bg-accent-primary text-white"
