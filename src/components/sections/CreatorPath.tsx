@@ -171,7 +171,7 @@ export default function CreatorPath() {
                   className="rounded-xl border border-border-default bg-bg-secondary p-4"
                 >
                   <div className="mb-2 text-xs text-text-muted">{stat.label}</div>
-                  <div className="flex items-end justify-between">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
                     <span className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold text-text-primary">
                       {stat.value}
                     </span>
