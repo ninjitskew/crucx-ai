@@ -1,0 +1,10 @@
+module.exports=[21290,a=>{a.v({className:"inter_5901b7c6-module__ec5Qua__className",variable:"inter_5901b7c6-module__ec5Qua__variable"})},48377,a=>{a.v({className:"space_grotesk_154b09cb-module__lmdqzG__className",variable:"space_grotesk_154b09cb-module__lmdqzG__variable"})},27572,a=>{"use strict";var b=a.i(7997),c=a.i(21290);let d={className:c.default.className,style:{fontFamily:"'Inter', 'Inter Fallback'",fontStyle:"normal"}};null!=c.default.variable&&(d.variable=c.default.variable);var e=a.i(48377);let f={className:e.default.className,style:{fontFamily:"'Space Grotesk', 'Space Grotesk Fallback'",fontStyle:"normal"}};null!=e.default.variable&&(f.variable=e.default.variable);let g=`
+(function() {
+  try {
+    var t = localStorage.getItem('crucx-theme');
+    if (t === 'light') document.documentElement.classList.add('light');
+  } catch(e) {}
+})();
+`;function h({children:a}){return(0,b.jsxs)("html",{lang:"en",suppressHydrationWarning:!0,children:[(0,b.jsx)("head",{children:(0,b.jsx)("script",{dangerouslySetInnerHTML:{__html:g}})}),(0,b.jsx)("body",{className:`${d.variable} ${f.variable} font-[family-name:var(--font-inter)] antialiased`,children:a})]})}a.s(["default",()=>h,"metadata",0,{title:"crucx.ai — Create. Discover. Publish.",description:"The content-to-commerce platform for authors and readers. Publish your books with AI-powered tools or discover your next favorite read in our marketplace.",keywords:["self publishing","book publishing","book marketplace","amazon kdp","ghostwriting","buy books online","ebooks","content to commerce","crucx"],authors:[{name:"crucx.ai"}],openGraph:{title:"crucx.ai — Create. Discover. Publish.",description:"The content-to-commerce platform for authors and readers. Publish or discover books on crucx.ai.",url:"https://crucx.ai",siteName:"crucx.ai",type:"website",locale:"en_US"},twitter:{card:"summary_large_image",title:"crucx.ai — Create. Discover. Publish.",description:"The content-to-commerce platform for authors and readers. Publish or discover books on crucx.ai.",creator:"@crucxai"},robots:{index:!0,follow:!0}}],27572)}];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__da8b1080._.js.map

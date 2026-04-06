@@ -1,0 +1,16 @@
+[00:00:02.747] Server  LOG     ✓ Ready in 2.2s
+[00:00:06.413] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:08.472] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:25:48.078] Server  ERROR   Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.088] Server  ERROR   ⨯ "unhandledRejection:" Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.099] Server  ERROR   ⨯ "unhandledRejection: " Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.158] Server  ERROR   Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.168] Server  ERROR   ⨯ "unhandledRejection:" Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.179] Server  ERROR   ⨯ "unhandledRejection: " Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.237] Server  ERROR   Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.272] Server  ERROR   ⨯ "unhandledRejection:" Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.282] Server  ERROR   ⨯ "unhandledRejection: " Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.310] Server  ERROR   Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.317] Server  ERROR   Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.518] Server  ERROR   Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
+[00:25:48.526] Server  ERROR   Error: ENOENT: no such file or directory, scandir 'C:\Users\alcub\OneDrive\Desktop\STARTUP\CRUCX\src\app'
