@@ -1,0 +1,11 @@
+[
+  {
+    "slug": "deepak-menon",
+    "name": "Deepak Menon",
+    "tagline": "Self-publishing pioneer",
+    "bio": "Author exploring the intersection of strategy and storytelling.",
+    "avatar": "/authors/deepak-menon.jpg",
+    "books": ["the-loop"],
+    "joinedAt": "2026-03-26"
+  }
+]
