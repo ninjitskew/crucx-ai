@@ -32,6 +32,7 @@ export const HERO_AUTHOR = {
   stats: [
     { label: "Authors", value: 500, suffix: "+" },
     { label: "Books Published", value: 1200, suffix: "+" },
+    { label: "Worth Books Sold", value: 5, prefix: "INR ", suffix: " Mn" },
   ] as HeroStat[],
 };
 

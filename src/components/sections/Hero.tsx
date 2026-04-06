@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { HERO_AUTHOR, HERO_MARKETPLACE, HERO_STATS } from "@/lib/constants";
+import { HERO_AUTHOR, HERO_MARKETPLACE } from "@/lib/constants";
 import Button from "@/components/ui/Button";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import GradientMesh from "@/components/ui/GradientMesh";
@@ -60,9 +60,9 @@ function HeroPath({
       </div>
 
       {/* Stats */}
-      <div className="mt-8 flex gap-8">
+      <div className="mt-8 flex w-full flex-wrap justify-center gap-x-6 gap-y-4 sm:gap-x-8 lg:justify-start">
         {data.stats.map((stat) => (
-          <div key={stat.label}>
+          <div key={stat.label} className="min-w-0">
             <div className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold text-text-primary sm:text-3xl">
               <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
             </div>
@@ -142,22 +142,6 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Bottom stats bar */}
-        <motion.div
-          className="mt-16 grid grid-cols-2 gap-6 sm:grid-cols-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
-          {HERO_STATS.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="font-[family-name:var(--font-space-grotesk)] text-3xl font-bold text-text-primary sm:text-4xl">
-                <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
-              </div>
-              <div className="mt-1 text-sm text-text-secondary">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
       </div>
 
       {/* Bottom fade */}
