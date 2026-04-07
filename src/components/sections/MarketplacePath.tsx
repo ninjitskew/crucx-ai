@@ -196,21 +196,27 @@ export default function MarketplacePath() {
         ))}
       </motion.div>
 
-      {/* Bestsellers Banner */}
+      {/* Bestsellers Banner + Browse All CTA */}
       <motion.div
-        className="mb-8 flex items-center gap-2"
+        className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.4 }}
       >
-        <TagIcon className="h-5 w-5 text-amber-400" />
-        <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-semibold text-text-primary">
-          {activeCategory === "All" ? "Trending Books" : activeCategory}
-        </h3>
-        <span className="ml-2 text-sm text-text-muted">
-          ({filteredBooks.length} {filteredBooks.length === 1 ? "book" : "books"})
-        </span>
+        <div className="flex items-center gap-2">
+          <TagIcon className="h-5 w-5 text-amber-400" />
+          <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-semibold text-text-primary">
+            {activeCategory === "All" ? "Trending Books" : activeCategory}
+          </h3>
+          <span className="ml-2 text-sm text-text-muted">
+            ({filteredBooks.length} {filteredBooks.length === 1 ? "book" : "books"})
+          </span>
+        </div>
+        <Button href="/books/page/1/" variant="secondary" size="sm">
+          Browse All Books
+          <ArrowRightIcon className="ml-2 h-4 w-4" />
+        </Button>
       </motion.div>
 
       {/* Book Grid */}
@@ -228,18 +234,6 @@ export default function MarketplacePath() {
         </div>
       )}
 
-      {/* Browse All CTA */}
-      <motion.div
-        className="mt-12 text-center"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-      >
-        <Button href="#waitlist" variant="secondary" size="lg">
-          Browse All Books
-          <ArrowRightIcon className="ml-2 h-5 w-5" />
-        </Button>
-      </motion.div>
     </SectionWrapper>
   );
 }
