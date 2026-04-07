@@ -149,12 +149,19 @@ export default function CreatorPath() {
 
         {/* Right: Dashboard Preview */}
         <motion.div
-          className="flex flex-col justify-center"
+          className="flex flex-col"
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
+          {/* Spacer to align dashboard top with the first feature card on the left */}
+          <h3
+            aria-hidden="true"
+            className="invisible mb-6 hidden font-[family-name:var(--font-space-grotesk)] text-2xl font-bold lg:block"
+          >
+            .
+          </h3>
           <div className="rounded-2xl border border-border-default bg-bg-card p-6">
             <div className="mb-6 flex items-center justify-between">
               <h4 className="font-[family-name:var(--font-space-grotesk)] text-lg font-semibold text-text-primary">

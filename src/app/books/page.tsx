@@ -1,65 +1,78 @@
 import Link from "next/link";
 import books from "@/content/books.json";
-import { paginate, pageRange, PAGE_SIZE } from "@/lib/pagination";
+import authors from "@/content/authors.json";
+import BookCarousel from "@/components/marketplace/BookCarousel";
+import FollowedAuthorsCarousel from "@/components/marketplace/FollowedAuthorsCarousel";
+import type { Book, Author } from "@/lib/types";
 
-const CATEGORIES = ["All", "Strategy", "Fiction", "Nonfiction", "Poetry"];
+const CATEGORIES = [
+  "Fiction",
+  "Self-Help",
+  "Business",
+  "Romance",
+  "Mystery",
+  "Sci-Fi",
+  "Strategy",
+  "Poetry",
+];
 
 export default function BooksIndex() {
-  const { items, totalPages } = paginate(books, 1);
+  const all = books as Book[];
+  const auths = authors as Author[];
+
+  const has = (b: Book, t: string) => (b.tags ?? []).includes(t);
+  const bestsellers = all.filter((b) => has(b, "bestseller"));
+  const newReleases = [...all].sort((a, b) => (b.publishedAt > a.publishedAt ? 1 : -1)).slice(0, 8);
+  const trending = all.filter((b) => has(b, "trending"));
+  const picks = all.filter((b) => has(b, "picks"));
+  const rising = all.filter((b) => has(b, "rising"));
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-16">
-      <h1 className="mb-2 text-4xl font-bold text-text-primary">Marketplace</h1>
-      <p className="mb-8 text-text-muted">Discover books by independent authors.</p>
+    <main className="min-h-screen bg-bg-primary pt-24">
+      {/* Hero */}
+      <section className="relative overflow-hidden border-b border-border-default">
+        <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/15 via-accent-purple/10 to-accent-pink/15" />
+        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <p className="mb-3 text-xs uppercase tracking-wider text-accent-blue">Reader Marketplace</p>
+          <h1 className="max-w-3xl font-[family-name:var(--font-space-grotesk)] text-4xl font-bold text-text-primary sm:text-5xl lg:text-6xl">
+            Discover books from independent authors.
+          </h1>
+          <p className="mt-4 max-w-2xl text-lg text-text-secondary">
+            Bestsellers, new releases, and rising voices — curated daily by the crucx team.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link href="/search/" className="rounded-xl bg-gradient-to-r from-accent-blue to-accent-purple px-5 py-3 text-sm font-semibold text-white">
+              Search the catalog
+            </Link>
+            <Link href="/marketplace/fiction/1/" className="rounded-xl border border-border-default px-5 py-3 text-sm font-semibold text-text-primary hover:border-accent-blue">
+              Browse Fiction
+            </Link>
+          </div>
+        </div>
+      </section>
 
-      <div className="mb-8 flex flex-wrap gap-2">
-        {CATEGORIES.map((c) => (
-          <Link
-            key={c}
-            href={c === "All" ? "/books" : `/marketplace/${c.toLowerCase()}/1`}
-            className="rounded-full border border-border-default px-4 py-1.5 text-sm text-text-secondary hover:border-accent-primary hover:text-text-primary"
-          >
-            {c}
-          </Link>
-        ))}
-      </div>
+      <BookCarousel title="Bestsellers" subtitle="What readers are buying now" books={bestsellers} authors={auths} />
+      <BookCarousel title="New Releases" subtitle="Fresh from independent authors" books={newReleases} authors={auths} />
+      <BookCarousel title="Trending" subtitle="Buzzing this week" books={trending} authors={auths} />
+      <BookCarousel title="Crucx Picks" subtitle="Hand-curated by our editors" books={picks} authors={auths} />
+      <BookCarousel title="Rising Authors" subtitle="Names you'll know soon" books={rising} authors={auths} />
+      <FollowedAuthorsCarousel />
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((b) => (
-          <Link
-            key={b.slug}
-            href={`/books/${b.slug}`}
-            className="rounded-2xl border border-border-default bg-bg-card p-6 transition hover:border-accent-primary"
-          >
-            <div className="mb-3 aspect-[3/4] rounded-lg bg-bg-secondary" />
-            <h2 className="text-base font-semibold text-text-primary">
-              {b.title}
-            </h2>
-            <p className="mt-1 text-xs text-text-muted">{b.category}</p>
-            <p className="mt-3 text-sm font-semibold text-accent-primary">
-              ₹{b.price}
-            </p>
-          </Link>
-        ))}
-      </div>
-
-      {totalPages > 1 && (
-        <nav className="mt-12 flex items-center justify-center gap-2">
-          {pageRange(totalPages).map((p) => (
+      {/* Category grid */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <h2 className="mb-6 text-2xl font-bold text-text-primary sm:text-3xl">Browse by category</h2>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {CATEGORIES.map((c) => (
             <Link
-              key={p}
-              href={p === 1 ? "/books" : `/books/page/${p}`}
-              className={`rounded-lg px-4 py-2 text-sm ${
-                p === 1
-                  ? "bg-accent-primary text-white"
-                  : "border border-border-default text-text-secondary hover:text-text-primary"
-              }`}
+              key={c}
+              href={`/marketplace/${c.toLowerCase().replace(/[^a-z0-9]+/g, "-")}/1/`}
+              className="rounded-2xl border border-border-default bg-bg-card px-5 py-8 text-center font-semibold text-text-primary transition hover:border-accent-blue hover:bg-bg-secondary"
             >
-              {p}
+              {c}
             </Link>
           ))}
-        </nav>
-      )}
+        </div>
+      </section>
     </main>
   );
 }

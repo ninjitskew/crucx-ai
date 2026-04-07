@@ -7,5 +7,86 @@
     "avatar": "/authors/deepak-menon.jpg",
     "books": ["the-loop"],
     "joinedAt": "2026-03-26"
+  },
+  {
+    "slug": "james-okoro",
+    "name": "James Okoro",
+    "tagline": "Habits, creators, compounding",
+    "bio": "James writes about how independent creators build careers from tiny daily habits.",
+    "avatar": "/authors/james-okoro.jpg",
+    "books": ["atomic-creators"],
+    "joinedAt": "2026-02-01"
+  },
+  {
+    "slug": "sarah-mitchell",
+    "name": "Sarah Mitchell",
+    "tagline": "Literary fiction",
+    "bio": "Sarah writes quiet, devastating literary fiction about second chances.",
+    "avatar": "/authors/sarah-mitchell.jpg",
+    "books": ["midnight-library"],
+    "joinedAt": "2025-11-12"
+  },
+  {
+    "slug": "priya-sharma",
+    "name": "Priya Sharma",
+    "tagline": "Epic fantasy",
+    "bio": "Priya builds worlds with dragons, oaths, and unforgivable choices.",
+    "avatar": "/authors/priya-sharma.jpg",
+    "books": ["dragons-promise"],
+    "joinedAt": "2025-12-04"
+  },
+  {
+    "slug": "alex-chen",
+    "name": "Alex Chen",
+    "tagline": "Borderless finance",
+    "bio": "Alex helps remote workers and digital nomads make sense of money across currencies and tax regimes.",
+    "avatar": "/authors/alex-chen.jpg",
+    "books": ["digital-nomad-finance"],
+    "joinedAt": "2026-01-15"
+  },
+  {
+    "slug": "maya-rodriguez",
+    "name": "Maya Rodriguez",
+    "tagline": "Romance",
+    "bio": "Maya writes contemporary romances about strangers who become inevitable.",
+    "avatar": "/authors/maya-rodriguez.jpg",
+    "books": ["whispers-in-the-rain"],
+    "joinedAt": "2025-10-22"
+  },
+  {
+    "slug": "david-park",
+    "name": "David Park",
+    "tagline": "AI and sci-fi",
+    "bio": "David writes both practical playbooks and sweeping sci-fi about the futures we build.",
+    "avatar": "/authors/david-park.jpg",
+    "books": ["the-ai-playbook", "the-second-empire"],
+    "joinedAt": "2025-09-01"
+  },
+  {
+    "slug": "ananya-desai",
+    "name": "Ananya Desai",
+    "tagline": "Poetry and wellness",
+    "bio": "Ananya writes poems about distance and protocols for getting your body back.",
+    "avatar": "/authors/ananya-desai.jpg",
+    "books": ["salt-and-stars", "the-garden-protocol"],
+    "joinedAt": "2026-01-30"
+  },
+  {
+    "slug": "kevin-tran",
+    "name": "Kevin Tran",
+    "tagline": "Mystery / thriller",
+    "bio": "Kevin writes detective novels with mathematical puzzles at their heart.",
+    "avatar": "/authors/kevin-tran.jpg",
+    "books": ["cold-arithmetic"],
+    "joinedAt": "2026-02-19"
+  },
+  {
+    "slug": "rohit-menon",
+    "name": "Rohit Menon",
+    "tagline": "Quiet operators",
+    "bio": "Rohit profiles introverted founders building outsized businesses.",
+    "avatar": "/authors/rohit-menon.jpg",
+    "books": ["quiet-leverage"],
+    "joinedAt": "2025-12-18"
   }
 ]

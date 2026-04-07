@@ -7,10 +7,9 @@ export const SITE = {
 };
 
 export const NAV_LINKS = [
-  { label: "For Authors", href: "#for-authors" },
-  { label: "Marketplace", href: "#marketplace" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Testimonials", href: "#testimonials" },
+  { label: "Marketplace", href: "/books/" },
+  { label: "Authors", href: "/authors/" },
+  { label: "Pricing", href: "/pricing/" },
 ];
 
 // ===== HERO SECTION (50/50 Split) =====
@@ -42,7 +41,7 @@ export const HERO_MARKETPLACE = {
   subheadline:
     "Explore curated books across genres. From bestsellers to hidden gems — find your next favorite read at the best prices.",
   cta: "Browse Marketplace",
-  ctaHref: "#marketplace",
+  ctaHref: "/books/page/1/",
   stats: [
     { label: "Books Available", value: 5000, suffix: "+" },
     { label: "Categories", value: 30, suffix: "+" },
