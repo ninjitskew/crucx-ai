@@ -12,7 +12,9 @@ import FollowAuthorButton from "@/components/marketplace/FollowAuthorButton";
 import type { Book, Author } from "@/lib/types";
 
 export function generateStaticParams() {
-  return (books as Book[]).map((b) => ({ slug: b.slug }));
+  return (books as Book[])
+    .filter((b) => (b.status ?? "published") === "published")
+    .map((b) => ({ slug: b.slug }));
 }
 
 const MOCK_REVIEWS = [
@@ -25,7 +27,7 @@ export default async function BookDetailPage({ params }: { params: Promise<{ slu
   const { slug } = await params;
   const all = books as Book[];
   const auths = authors as Author[];
-  const book = all.find((b) => b.slug === slug);
+  const book = all.find((b) => b.slug === slug && (b.status ?? "published") === "published");
   if (!book) notFound();
 
   const author = auths.find((a) => a.slug === book.authorSlug);

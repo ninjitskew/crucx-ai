@@ -36,7 +36,18 @@ export default function ReaderReviewsPage() {
           <ul className="mt-8 space-y-4">
             {reviews.map((r) => (
               <li key={r.id ?? r.book_slug} className="rounded-xl border border-border-default bg-bg-card p-4">
-                <p className="text-sm text-text-muted">{r.book_slug}</p>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-text-muted">{r.book_slug ?? r.book_id}</p>
+                  <span className={`rounded-full border px-2 py-0.5 text-xs capitalize ${
+                    r.moderation_status === "approved"
+                      ? "border-accent-cyan/30 text-accent-cyan"
+                      : r.moderation_status === "rejected"
+                      ? "border-accent-pink/30 text-accent-pink"
+                      : "border-accent-purple/30 text-accent-purple"
+                  }`}>
+                    {r.moderation_status ?? "pending"}
+                  </span>
+                </div>
                 <p className="mt-1 text-text-primary">{r.rating} ★</p>
                 <p className="mt-2 text-sm text-text-secondary">{r.body}</p>
               </li>

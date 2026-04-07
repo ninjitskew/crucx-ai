@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import BackToTop from "@/components/ui/BackToTop";
 import BookCard from "@/components/marketplace/BookCard";
 import FilterSidebar from "@/components/marketplace/FilterSidebar";
@@ -43,6 +41,7 @@ export default function MarketplaceClient({ pageNum, books, authors }: Props) {
     const q = query.trim().toLowerCase();
     let r = books.filter(
       (b) =>
+        (b.status ?? "published") === "published" &&
         b.price <= priceRange[1] &&
         (b.rating ?? 0) >= minRating &&
         (format === "any" || (b.format ?? "eBook") === format) &&
@@ -68,7 +67,6 @@ export default function MarketplaceClient({ pageNum, books, authors }: Props) {
 
   return (
     <>
-      <Navbar />
       <main className="min-h-screen bg-bg-primary pt-24">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: "Marketplace", href: "/books/" }, { label: "Browse All" }]} />
@@ -161,7 +159,6 @@ export default function MarketplaceClient({ pageNum, books, authors }: Props) {
           </div>
         </div>
       </main>
-      <Footer />
       <BackToTop />
     </>
   );
