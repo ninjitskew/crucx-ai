@@ -27,6 +27,7 @@ export default function ReviewComposer({ bookSlug }: { bookSlug: string }) {
       user_id: user.id,
       rating,
       body,
+      moderation_status: "pending",
     });
     setStatus(error ? "error" : "saved");
   }
@@ -52,8 +53,11 @@ export default function ReviewComposer({ bookSlug }: { bookSlug: string }) {
         disabled={status === "saving"}
         className="mt-3 rounded-lg bg-gradient-to-r from-accent-blue to-accent-purple px-4 py-2 text-sm font-semibold text-white"
       >
-        {status === "saving" ? "Saving..." : status === "saved" ? "Saved" : "Post review"}
+        {status === "saving" ? "Saving..." : status === "saved" ? "Submitted" : "Post review"}
       </button>
+      {status === "saved" && (
+        <p className="mt-2 text-xs text-accent-cyan">Submitted — awaiting moderation.</p>
+      )}
       {status === "error" && <p className="mt-2 text-xs text-accent-pink">Couldn't save. Check your connection.</p>}
     </div>
   );

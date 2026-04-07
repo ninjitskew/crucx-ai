@@ -13,7 +13,12 @@ export function getSupabase(): SupabaseClient | null {
   if (!url || !anonKey) return null;
   if (!_client) {
     _client = createClient(url, anonKey, {
-      auth: { persistSession: true, autoRefreshToken: true },
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        // Disable cross-tab lock to avoid "lock was released" race in dev with multiple tabs
+        lock: async (_name, _acquireTimeout, fn) => await fn(),
+      },
     });
   }
   return _client;
