@@ -74,11 +74,6 @@ export default function Navbar() {
                 My Library
               </Link>
             )}
-            {isAdmin && (
-              <Link href="/admin/" className="rounded-md border border-accent-blue/40 bg-accent-blue/10 px-2.5 py-1 text-sm font-medium text-accent-blue transition-colors hover:bg-accent-blue/20">
-                Admin
-              </Link>
-            )}
           </div>
 
           <div className="hidden items-center gap-2 md:flex">
@@ -102,13 +97,16 @@ export default function Navbar() {
                 </button>
                 {userMenu && (
                   <div className="absolute right-0 mt-2 w-48 rounded-xl border border-border-default bg-bg-card py-2 shadow-xl">
-                    {isAdmin && (
-                      <Link href="/admin/" className="block px-4 py-2 text-sm font-medium text-accent-blue hover:bg-bg-secondary">Admin CMS</Link>
-                    )}
                     <Link href="/reader/library/" className="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-secondary hover:text-text-primary">My Library</Link>
                     <Link href="/reader/wishlist/" className="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-secondary hover:text-text-primary">Wishlist</Link>
                     <Link href="/reader/orders/" className="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-secondary hover:text-text-primary">Orders</Link>
                     <Link href="/reader/settings/" className="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-secondary hover:text-text-primary">Settings</Link>
+                    {isAdmin && (
+                      <>
+                        <div className="my-1 border-t border-border-default" />
+                        <Link href="/admin/" className="block px-4 py-2 text-sm text-accent-blue hover:bg-bg-secondary">Admin CMS</Link>
+                      </>
+                    )}
                     <button onClick={signOut} className="block w-full px-4 py-2 text-left text-sm text-text-secondary hover:bg-bg-secondary hover:text-accent-pink">Sign out</button>
                   </div>
                 )}
@@ -168,8 +166,9 @@ export default function Navbar() {
               {signedIn ? (
                 <>
                   <Link href="/reader/library/" onClick={() => setMobileOpen(false)} className="text-2xl text-text-secondary">My Library</Link>
+                  <Link href="/reader/settings/" onClick={() => setMobileOpen(false)} className="text-2xl text-text-secondary">Settings</Link>
                   {isAdmin && (
-                    <Link href="/admin/" onClick={() => setMobileOpen(false)} className="text-2xl font-medium text-accent-blue">Admin CMS</Link>
+                    <Link href="/admin/" onClick={() => setMobileOpen(false)} className="text-sm text-text-muted">Admin CMS</Link>
                   )}
                   <button onClick={() => { setMobileOpen(false); signOut(); }} className="text-2xl text-text-secondary">Sign out</button>
                 </>
