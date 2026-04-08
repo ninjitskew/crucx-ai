@@ -32,15 +32,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <code className="text-accent-cyan">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, then reload.
               </p>
             </div>
-          ) : loading ? (
-            <div className="p-10 text-center text-text-muted">Loading admin…</div>
-          ) : !isAdmin ? (
-            <div className="p-10 text-center text-text-muted">Redirecting…</div>
-          ) : (
+          ) : isAdmin ? (
             <div className="flex flex-col gap-6 lg:flex-row">
               <AdminSidebar />
               <div className="min-w-0 flex-1">{children}</div>
             </div>
+          ) : loading ? (
+            <div className="p-10 text-center text-text-muted">Loading admin…</div>
+          ) : (
+            <div className="p-10 text-center text-text-muted">Redirecting…</div>
           )}
         </div>
       </main>

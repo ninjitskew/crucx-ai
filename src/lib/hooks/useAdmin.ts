@@ -50,12 +50,17 @@ export function useAdmin(): AdminState {
         setState({ loading: false, user: u, isAdmin: fastAdmin, configured: true, role: fastAdmin ? "admin" : null });
       }
 
-      // Best-effort role lookup for secondary admins (added via /admin/settings)
+      // Best-effort role lookup for secondary admins (added via /admin/settings).
+      // Wrapped in a timeout so a hanging RLS/network call never re-blocks the UI.
       try {
-        const { data } = await sb!.from("app_user").select("role").eq("id", u.id).maybeSingle();
+        const lookup = sb!.from("app_user").select("role").eq("id", u.id).maybeSingle();
+        const timeout = new Promise<{ data: null }>((resolve) =>
+          setTimeout(() => resolve({ data: null }), 2500)
+        );
+        const { data } = (await Promise.race([lookup, timeout])) as { data: { role?: string } | null };
         const role = (data?.role as string) ?? null;
         if (mounted) {
-          setState({ loading: false, user: u, isAdmin: fastAdmin || role === "admin", configured: true, role });
+          setState({ loading: false, user: u, isAdmin: fastAdmin || role === "admin", configured: true, role: role ?? (fastAdmin ? "admin" : null) });
         }
       } catch {
         // ignore — fastAdmin already applied
