@@ -11,10 +11,18 @@ export default function BuyBox({ book, authorName }: { book: Book; authorName?: 
   const openDrawer = useCart((s) => s.openDrawer);
 
   function handleAddToCart() {
+    if (book.buyUrl) {
+      window.open(book.buyUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
     add({ slug: book.slug, title: book.title, price: book.price, cover: book.cover, authorName });
     openDrawer();
   }
   function handleBuyNow() {
+    if (book.buyUrl) {
+      window.open(book.buyUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
     add({ slug: book.slug, title: book.title, price: book.price, cover: book.cover, authorName });
     router.push("/checkout/");
   }

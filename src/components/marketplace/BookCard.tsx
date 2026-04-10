@@ -54,6 +54,10 @@ export default function BookCard({ book, authorName, compact = false }: Props) {
   function handleAdd(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
+    if (book.buyUrl) {
+      window.open(book.buyUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
     add({ slug: book.slug, title: book.title, price: book.price, cover: book.cover, authorName });
     openDrawer();
   }

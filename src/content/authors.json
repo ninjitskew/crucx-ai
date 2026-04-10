@@ -45,11 +45,11 @@
     "joinedAt": "2026-01-15"
   },
   {
-    "slug": "maya-rodriguez",
-    "name": "Maya Rodriguez",
-    "tagline": "Romance",
-    "bio": "Maya writes contemporary romances about strangers who become inevitable.",
-    "avatar": "/authors/maya-rodriguez.jpg",
+    "slug": "anika-agarwal",
+    "name": "Anika Agarwal",
+    "tagline": "Poetry",
+    "bio": "Anika Agarwal is the winner of the 21st Century Emily Dickinson Award. Her poetry explores the emotional roller coaster of navigating life, friendships, and self-discovery.",
+    "avatar": "/authors/anika-agarwal.jpg",
     "books": ["whispers-in-the-rain"],
     "joinedAt": "2025-10-22"
   },

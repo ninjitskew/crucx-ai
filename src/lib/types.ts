@@ -15,6 +15,7 @@ export interface Book {
   publishedAt: string;
   toc?: string[];
   status?: "draft" | "published" | "archived";
+  buyUrl?: string;
 }
 
 export interface Author {
