@@ -8,6 +8,7 @@ import { MenuIcon, XMarkIcon } from "@/components/ui/Icons";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/ui/Logo";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import CurrencyToggle from "@/components/layout/CurrencyToggle";
 import AuthModal from "@/components/ui/AuthModal";
 import CartDrawer from "@/components/marketplace/CartDrawer";
 import { useCart } from "@/lib/stores/cart";
@@ -89,6 +90,7 @@ export default function Navbar() {
                 </span>
               )}
             </button>
+            <CurrencyToggle />
             <ThemeToggle />
             {signedIn ? (
               <div className="relative">
@@ -130,6 +132,7 @@ export default function Navbar() {
                 </span>
               )}
             </button>
+            <CurrencyToggle />
             <ThemeToggle />
             <button
               className="text-text-primary"

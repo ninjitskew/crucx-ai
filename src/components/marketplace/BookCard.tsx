@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import RatingStars from "./RatingStars";
-import { formatUSD } from "@/lib/format";
 import { useCart } from "@/lib/stores/cart";
 import { getSupabase } from "@/lib/supabase";
 import { useUser } from "@/lib/lib-shim";
+import { useCurrency } from "@/lib/hooks/useCurrency";
 import type { Book } from "@/lib/types";
 
 interface Props {
@@ -19,7 +19,9 @@ export default function BookCard({ book, authorName, compact = false }: Props) {
   const add = useCart((s) => s.add);
   const openDrawer = useCart((s) => s.openDrawer);
   const { user } = useUser();
+  const { format } = useCurrency();
   const [wished, setWished] = useState(false);
+  const hasAmazon = Boolean(book.amazonInUrl || book.amazonComUrl);
 
   useEffect(() => {
     if (!user) return;
@@ -54,8 +56,9 @@ export default function BookCard({ book, authorName, compact = false }: Props) {
   function handleAdd(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    if (book.buyUrl) {
-      window.open(book.buyUrl, "_blank", "noopener,noreferrer");
+    if (hasAmazon) {
+      // Route through our tracked redirect so we log the click before Amazon
+      window.open(`/out/${book.slug}/`, "_blank", "noopener,noreferrer");
       return;
     }
     add({ slug: book.slug, title: book.title, price: book.price, cover: book.cover, authorName });
@@ -92,13 +95,19 @@ export default function BookCard({ book, authorName, compact = false }: Props) {
           <RatingStars rating={book.rating ?? 0} reviewCount={book.reviewCount} />
         </div>
       )}
-      <div className="mt-3 flex items-center justify-between">
-        <span className="text-base font-bold text-text-primary">{formatUSD(book.price)}</span>
+      <div className="mt-3 flex items-center justify-between gap-2">
+        <span className="text-base font-bold text-text-primary">
+          {format(book.priceUsd ?? book.price, book.priceInr)}
+        </span>
         <button
           onClick={handleAdd}
-          className="rounded-lg border border-border-default px-2 py-1 text-[11px] font-medium text-text-secondary transition hover:border-accent-blue hover:text-accent-blue"
+          className={`rounded-lg border px-2 py-1 text-[11px] font-medium transition ${
+            hasAmazon
+              ? "border-accent-blue/40 bg-accent-blue/10 text-accent-blue hover:bg-accent-blue/20"
+              : "border-border-default text-text-secondary hover:border-accent-blue hover:text-accent-blue"
+          }`}
         >
-          + Cart
+          {hasAmazon ? "Buy on Amazon ↗" : "+ Cart"}
         </button>
       </div>
     </Link>
