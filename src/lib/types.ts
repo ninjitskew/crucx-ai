@@ -3,11 +3,17 @@ export interface Book {
   title: string;
   subtitle?: string;
   authorSlug: string;
+  authorName?: string;              // free-text, for affiliate books
   category: string;
+  superCategory?: string;           // Fiction | Non-fiction | Children | Shorts
   tags?: string[];
   cover: string;
+  coverUrl?: string;                // explicit Amazon image URL (preferred over `cover`)
   description: string;
-  price: number;
+  price: number;                    // legacy — USD display fallback
+  priceUsd?: number;
+  priceInr?: number;
+  currencyPrimary?: "USD" | "INR";
   rating?: number;
   reviewCount?: number;
   format?: string;
@@ -15,7 +21,12 @@ export interface Book {
   publishedAt: string;
   toc?: string[];
   status?: "draft" | "published" | "archived";
-  buyUrl?: string;
+  buyUrl?: string;                  // legacy — falls through to amazonInUrl
+  asin?: string;
+  amazonInUrl?: string;
+  amazonComUrl?: string;
+  bestsellerRank?: number | null;
+  source?: "db" | "json";           // provenance for debugging
 }
 
 export interface Author {

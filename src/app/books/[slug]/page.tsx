@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import books from "@/content/books.json";
-import authors from "@/content/authors.json";
+import { getAllBooks, getAllAuthors } from "@/lib/content/books-source";
 import BuyBox from "@/components/marketplace/BuyBox";
 import RatingStars from "@/components/marketplace/RatingStars";
 import BookCarousel from "@/components/marketplace/BookCarousel";
@@ -9,10 +8,10 @@ import Breadcrumbs from "@/components/marketplace/Breadcrumbs";
 import SamplePreviewLauncher from "@/components/marketplace/SamplePreviewLauncher";
 import ReviewComposer from "@/components/marketplace/ReviewComposer";
 import FollowAuthorButton from "@/components/marketplace/FollowAuthorButton";
-import type { Book, Author } from "@/lib/types";
 
-export function generateStaticParams() {
-  return (books as Book[])
+export async function generateStaticParams() {
+  const books = await getAllBooks();
+  return books
     .filter((b) => (b.status ?? "published") === "published")
     .map((b) => ({ slug: b.slug }));
 }
@@ -25,13 +24,19 @@ const MOCK_REVIEWS = [
 
 export default async function BookDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const all = books as Book[];
-  const auths = authors as Author[];
+  const all = await getAllBooks();
+  const auths = await getAllAuthors();
   const book = all.find((b) => b.slug === slug && (b.status ?? "published") === "published");
   if (!book) notFound();
 
   const author = auths.find((a) => a.slug === book.authorSlug);
-  const related = all.filter((b) => b.slug !== book.slug && b.category === book.category).slice(0, 8);
+  const related = all
+    .filter(
+      (b) =>
+        b.slug !== book.slug &&
+        (b.category === book.category || (b.superCategory && b.superCategory === book.superCategory))
+    )
+    .slice(0, 8);
 
   return (
     <main className="min-h-screen bg-bg-primary pt-24">

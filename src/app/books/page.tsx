@@ -1,9 +1,8 @@
 import Link from "next/link";
-import books from "@/content/books.json";
-import authors from "@/content/authors.json";
+import { getAllBooks, getAllAuthors } from "@/lib/content/books-source";
 import BookCarousel from "@/components/marketplace/BookCarousel";
 import FollowedAuthorsCarousel from "@/components/marketplace/FollowedAuthorsCarousel";
-import type { Book, Author } from "@/lib/types";
+import type { Book } from "@/lib/types";
 
 const CATEGORIES = [
   "Fiction",
@@ -16,9 +15,9 @@ const CATEGORIES = [
   "Poetry",
 ];
 
-export default function BooksIndex() {
-  const all = books as Book[];
-  const auths = authors as Author[];
+export default async function BooksIndex() {
+  const all = await getAllBooks();
+  const auths = await getAllAuthors();
 
   const has = (b: Book, t: string) => (b.tags ?? []).includes(t);
   const bestsellers = all.filter((b) => has(b, "bestseller"));
