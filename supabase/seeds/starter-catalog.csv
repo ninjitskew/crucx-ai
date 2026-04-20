@@ -1,0 +1,41 @@
+asin,super_category,title,author_name,price_usd,price_inr,rating,review_count,format,pages,published_date
+0061122416,Fiction,The Alchemist,Paulo Coelho,16.99,299,4.7,185000,Paperback,208,1993-04-25
+1501110365,Fiction,It Ends with Us,Colleen Hoover,14.99,399,4.6,450000,Paperback,384,2016-08-02
+1538724731,Fiction,Verity,Colleen Hoover,10.99,299,4.7,390000,Paperback,336,2021-10-05
+1250301696,Fiction,The Silent Patient,Alex Michaelides,17.99,399,4.5,215000,Paperback,336,2020-02-04
+0735219109,Fiction,Where the Crawdads Sing,Delia Owens,18.00,499,4.7,470000,Paperback,400,2018-08-14
+0525559477,Fiction,The Midnight Library,Matt Haig,17.00,399,4.3,210000,Paperback,304,2020-08-13
+0593135202,Fiction,Project Hail Mary,Andy Weir,20.00,549,4.7,135000,Paperback,496,2021-05-04
+1501161938,Fiction,"The Seven Husbands of Evelyn Hugo",Taylor Jenkins Reid,17.00,399,4.7,310000,Paperback,400,2018-05-29
+0593321200,Fiction,"Tomorrow, and Tomorrow, and Tomorrow",Gabrielle Zevin,18.99,499,4.5,95000,Paperback,416,2022-07-05
+198188478X,Fiction,The Thursday Murder Club,Richard Osman,16.00,399,4.4,145000,Paperback,400,2020-09-03
+0141439513,Fiction,Pride and Prejudice,Jane Austen,8.99,199,4.6,95000,Paperback,480,2002-12-31
+0451524934,Fiction,1984,George Orwell,9.99,199,4.7,125000,Paperback,328,1950-07-01
+0446310786,Fiction,To Kill a Mockingbird,Harper Lee,9.99,299,4.8,110000,Paperback,281,1988-10-11
+0743273567,Fiction,The Great Gatsby,F. Scott Fitzgerald,9.99,199,4.4,85000,Paperback,180,2004-09-30
+1594483841,Fiction,A Thousand Splendid Suns,Khaled Hosseini,17.00,399,4.7,65000,Paperback,432,2008-09-18
+0812979656,Fiction,The God of Small Things,Arundhati Roy,16.00,399,4.3,25000,Paperback,333,2008-06-03
+0735211299,Non-fiction,Atomic Habits,James Clear,17.99,499,4.8,175000,Hardcover,320,2018-10-16
+0062316117,Non-fiction,Sapiens,Yuval Noah Harari,19.99,499,4.6,82000,Paperback,464,2015-02-10
+1612680178,Non-fiction,Rich Dad Poor Dad,Robert Kiyosaki,8.99,299,4.7,100000,Paperback,336,2017-04-11
+0374533555,Non-fiction,"Thinking, Fast and Slow",Daniel Kahneman,18.00,499,4.6,46000,Paperback,499,2013-04-02
+0857197681,Non-fiction,The Psychology of Money,Morgan Housel,15.99,299,4.7,65000,Paperback,256,2020-09-08
+1984878107,Non-fiction,Think Again,Adam Grant,18.00,499,4.6,35000,Hardcover,320,2021-02-02
+1982137274,Non-fiction,The 7 Habits of Highly Effective People,Stephen Covey,17.99,399,4.7,51000,Paperback,464,2020-05-19
+1577314808,Non-fiction,The Power of Now,Eckhart Tolle,16.00,349,4.7,45000,Paperback,229,2004-10-01
+080701429X,Non-fiction,Man's Search for Meaning,Viktor Frankl,14.99,299,4.8,60000,Paperback,192,2006-06-01
+0345472322,Non-fiction,Mindset,Carol Dweck,17.00,399,4.7,29000,Paperback,320,2007-12-26
+0143130722,Non-fiction,Ikigai,Hector Garcia,15.00,299,4.6,40000,Hardcover,208,2017-08-29
+1544512287,Non-fiction,Can't Hurt Me,David Goggins,20.99,499,4.8,110000,Paperback,364,2018-12-04
+0747532745,Children,Harry Potter and the Philosopher's Stone,J.K. Rowling,15.99,499,4.9,150000,Paperback,223,2014-09-01
+0399226907,Children,The Very Hungry Caterpillar,Eric Carle,11.99,299,4.9,55000,Hardcover,32,1994-03-23
+0064430170,Children,Goodnight Moon,Margaret Wise Brown,10.99,249,4.9,50000,Paperback,32,1991-09-04
+0064431789,Children,Where the Wild Things Are,Maurice Sendak,9.99,299,4.8,30000,Paperback,48,2012-11-13
+0142410314,Children,Charlie and the Chocolate Factory,Roald Dahl,8.99,249,4.8,45000,Paperback,176,2007-08-16
+0060256656,Children,The Giving Tree,Shel Silverstein,18.99,499,4.9,35000,Hardcover,64,1964-10-07
+0142410373,Children,Matilda,Roald Dahl,8.99,249,4.8,25000,Paperback,240,2007-08-16
+0064400557,Children,Charlotte's Web,E.B. White,9.99,299,4.8,29000,Paperback,184,1974-05-01
+1449474256,Shorts,Milk and Honey,Rupi Kaur,14.99,299,4.6,65000,Paperback,208,2015-11-04
+1449486797,Shorts,The Sun and Her Flowers,Rupi Kaur,15.99,349,4.7,30000,Paperback,256,2017-10-03
+076790592X,Shorts,Tuesdays with Morrie,Mitch Albom,14.00,299,4.8,55000,Paperback,192,2002-10-08
+0684801221,Shorts,The Old Man and the Sea,Ernest Hemingway,14.99,249,4.6,40000,Paperback,127,1995-05-05

@@ -102,11 +102,9 @@ function parseRow(raw: Record<string, string>, lineNum: number): ParsedRow {
     if (store === "amazon.in") inUrl = url;
     if (store === "amazon.com") comUrl = url;
   }
-  if (!inUrl && !comUrl && asin) {
-    // default to .in since primary traffic is India
-    inUrl = buildCanonicalUrl(asin, "amazon.in");
-    comUrl = buildCanonicalUrl(asin, "amazon.com");
-  }
+  // Whichever store is missing, auto-build from ASIN so both URLs are always present.
+  if (asin && !inUrl) inUrl = buildCanonicalUrl(asin, "amazon.in");
+  if (asin && !comUrl) comUrl = buildCanonicalUrl(asin, "amazon.com");
 
   const superCat = (raw.super_category || "").trim();
   if (superCat && !SUPER_CATEGORIES.includes(superCat as (typeof SUPER_CATEGORIES)[number])) {
