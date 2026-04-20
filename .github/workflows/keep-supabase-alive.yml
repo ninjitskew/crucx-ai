@@ -1,8 +1,9 @@
-name: Keep Supabase Alive
+name: Keep Supabase Alive + Refresh FX
 
 on:
   schedule:
     # Runs daily at 06:17 UTC — keeps free-tier project from pausing
+    # AND refreshes FX rates for the currency toggle.
     - cron: "17 6 * * *"
   workflow_dispatch: # Allow manual trigger
 
@@ -16,8 +17,62 @@ jobs:
             "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/book?select=slug&limit=1" \
             -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}")
-          echo "Supabase responded with HTTP $STATUS"
+          echo "Supabase ping: HTTP $STATUS"
           if [ "$STATUS" -ne 200 ]; then
             echo "::warning::Supabase ping returned $STATUS — project may be paused"
             exit 1
           fi
+
+  refresh-fx:
+    runs-on: ubuntu-latest
+    needs: ping
+    # Only runs if SUPABASE_SERVICE_ROLE_KEY is configured.
+    # Gracefully no-ops otherwise so the keep-alive never breaks.
+    steps:
+      - name: Fetch latest rates from open.er-api.com
+        id: fetch
+        run: |
+          # Free, no-auth, no-rate-limit public API
+          RESP=$(curl -s https://open.er-api.com/v6/latest/USD)
+          INR=$(echo "$RESP" | jq -r '.rates.INR // empty')
+          EUR=$(echo "$RESP" | jq -r '.rates.EUR // empty')
+          GBP=$(echo "$RESP" | jq -r '.rates.GBP // empty')
+          if [ -z "$INR" ] || [ -z "$EUR" ] || [ -z "$GBP" ]; then
+            echo "::warning::FX API returned incomplete data — skipping refresh"
+            exit 0
+          fi
+          echo "inr=$INR" >> "$GITHUB_OUTPUT"
+          echo "eur=$EUR" >> "$GITHUB_OUTPUT"
+          echo "gbp=$GBP" >> "$GITHUB_OUTPUT"
+          echo "Rates: 1 USD = ₹$INR / €$EUR / £$GBP"
+
+      - name: Upsert into fx_rate table
+        env:
+          SRK: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          INR: ${{ steps.fetch.outputs.inr }}
+          EUR: ${{ steps.fetch.outputs.eur }}
+          GBP: ${{ steps.fetch.outputs.gbp }}
+        run: |
+          if [ -z "$SRK" ]; then
+            echo "::notice::SUPABASE_SERVICE_ROLE_KEY not set — skipping FX upsert. Add it to GitHub Secrets to enable daily refresh."
+            exit 0
+          fi
+          NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          PAYLOAD=$(cat <<EOF
+          [
+            {"base":"USD","quote":"INR","rate":$INR,"as_of":"$NOW"},
+            {"base":"USD","quote":"EUR","rate":$EUR,"as_of":"$NOW"},
+            {"base":"USD","quote":"GBP","rate":$GBP,"as_of":"$NOW"},
+            {"base":"INR","quote":"USD","rate":$(awk -v r="$INR" 'BEGIN{printf "%.6f", 1/r}'),"as_of":"$NOW"}
+          ]
+          EOF
+          )
+          echo "$PAYLOAD" | curl -s -X POST \
+            "$URL/rest/v1/fx_rate?on_conflict=base,quote" \
+            -H "apikey: $SRK" \
+            -H "Authorization: Bearer $SRK" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: resolution=merge-duplicates,return=minimal" \
+            --data-binary @-
+          echo "FX rates refreshed for $NOW"
