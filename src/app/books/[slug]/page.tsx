@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/marketplace/Breadcrumbs";
 import SamplePreviewLauncher from "@/components/marketplace/SamplePreviewLauncher";
 import ReviewComposer from "@/components/marketplace/ReviewComposer";
 import FollowAuthorButton from "@/components/marketplace/FollowAuthorButton";
+import BookViewTracker from "@/components/marketplace/BookViewTracker";
 
 export async function generateStaticParams() {
   const books = await getAllBooks();
@@ -49,30 +50,97 @@ export default async function BookDetailPage({ params }: { params: Promise<{ slu
           ]}
         />
 
+        <BookViewTracker slug={book.slug} />
+
         <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[300px_1fr_320px]">
           {/* Cover */}
-          <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-accent-blue/30 via-accent-purple/30 to-accent-pink/30" />
+          {book.coverUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={book.coverUrl}
+              alt={book.title}
+              className="aspect-[3/4] w-full rounded-2xl object-cover"
+            />
+          ) : (
+            <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-accent-blue/30 via-accent-purple/30 to-accent-pink/30" />
+          )}
 
           {/* Details */}
           <div>
-            <p className="text-xs uppercase tracking-wider text-text-muted">{book.category}</p>
+            <p className="text-xs uppercase tracking-wider text-text-muted">
+              {book.superCategory ?? book.category}
+            </p>
             <h1 className="mt-2 font-[family-name:var(--font-space-grotesk)] text-4xl font-bold text-text-primary">
               {book.title}
             </h1>
             {book.subtitle && <p className="mt-1 text-lg text-text-secondary">{book.subtitle}</p>}
-            {author && (
-              <Link href={`/authors/${author.slug}/`} className="mt-3 inline-block text-text-secondary hover:text-accent-blue">
+            {author ? (
+              <Link
+                href={`/authors/${author.slug}/`}
+                className="mt-3 inline-block text-text-secondary hover:text-accent-blue"
+              >
                 by {author.name}
               </Link>
-            )}
-            <div className="mt-3 flex items-center gap-3">
+            ) : book.authorName ? (
+              <p className="mt-3 text-text-secondary">by {book.authorName}</p>
+            ) : null}
+            <div className="mt-3 flex flex-wrap items-center gap-3">
               <RatingStars rating={book.rating ?? 0} reviewCount={book.reviewCount} size="md" />
-              <span className="rounded-full bg-bg-secondary px-3 py-0.5 text-xs uppercase tracking-wider text-text-secondary">
-                {book.format ?? "eBook"}
-              </span>
+              {book.format && (
+                <span className="rounded-full bg-bg-secondary px-3 py-0.5 text-xs uppercase tracking-wider text-text-secondary">
+                  {book.format}
+                </span>
+              )}
+              {book.asin && (
+                <span className="rounded-full border border-border-default px-3 py-0.5 font-mono text-[10px] text-text-muted">
+                  ASIN {book.asin}
+                </span>
+              )}
             </div>
 
-            <p className="mt-6 text-text-secondary">{book.description}</p>
+            <p className="mt-6 whitespace-pre-line text-text-secondary">{book.description}</p>
+
+            {/* Amazon meta grid */}
+            {(book.pages || book.format || book.publishedAt) && (
+              <dl className="mt-6 grid grid-cols-2 gap-3 rounded-xl border border-border-default bg-bg-card p-4 text-sm sm:grid-cols-3">
+                {book.format && (
+                  <div>
+                    <dt className="text-xs uppercase tracking-wider text-text-muted">Format</dt>
+                    <dd className="mt-1 text-text-primary">{book.format}</dd>
+                  </div>
+                )}
+                {book.pages && (
+                  <div>
+                    <dt className="text-xs uppercase tracking-wider text-text-muted">Pages</dt>
+                    <dd className="mt-1 text-text-primary">{book.pages}</dd>
+                  </div>
+                )}
+                {book.publishedAt && (
+                  <div>
+                    <dt className="text-xs uppercase tracking-wider text-text-muted">Published</dt>
+                    <dd className="mt-1 text-text-primary">
+                      {new Date(book.publishedAt).toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </dd>
+                  </div>
+                )}
+                {book.superCategory && (
+                  <div>
+                    <dt className="text-xs uppercase tracking-wider text-text-muted">Category</dt>
+                    <dd className="mt-1 text-text-primary">{book.superCategory}</dd>
+                  </div>
+                )}
+                {book.asin && (
+                  <div>
+                    <dt className="text-xs uppercase tracking-wider text-text-muted">ASIN</dt>
+                    <dd className="mt-1 font-mono text-text-primary">{book.asin}</dd>
+                  </div>
+                )}
+              </dl>
+            )}
 
             <div className="mt-6">
               <SamplePreviewLauncher title={book.title} />
