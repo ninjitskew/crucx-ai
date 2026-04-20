@@ -76,7 +76,11 @@ function normalizeDbBook(row: DbBookRow): Book {
     authorName: row.author_name ?? undefined,
     category: row.super_category ?? "Other",
     superCategory: row.super_category ?? undefined,
-    tags: row.bestseller_rank != null && row.bestseller_rank <= 100 ? ["bestseller"] : [],
+    // Curated affiliate books (those with an ASIN) are all Amazon bestsellers
+    // by definition. Books with high review counts also qualify.
+    tags: row.asin || (row.review_count != null && row.review_count >= 10000)
+      ? ["bestseller"]
+      : [],
     cover: row.cover_url ?? "",
     coverUrl: row.cover_url ?? undefined,
     description: row.description ?? "",
