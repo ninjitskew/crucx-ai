@@ -3,6 +3,14 @@ name: Build & Deploy to Hostinger
 on:
   push:
     branches: [main]
+  workflow_dispatch:  # Allow manual re-run from GitHub UI
+
+# Serialize deploys — Hostinger FTP can only handle one active session.
+# `cancel-in-progress: false` lets a running deploy finish before the next
+# queues (prevents mid-upload wipes from dangerous-clean-slate).
+concurrency:
+  group: hostinger-deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
