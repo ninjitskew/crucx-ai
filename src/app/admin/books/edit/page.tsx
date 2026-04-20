@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { getSupabase } from "@/lib/supabase";
 import { useAdmin } from "@/lib/hooks/useAdmin";
 import { logAudit } from "@/lib/admin";
-import BookForm, { BookFormValue, emptyBook } from "@/components/admin/BookForm";
+import BookForm, { BookFormValue, emptyBook, toBookPayload, fromBookRow } from "@/components/admin/BookForm";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import { inputClasses } from "@/components/admin/FormField";
 
@@ -41,16 +41,7 @@ function EditInner() {
     (async () => {
       const { data } = await sb.from("book").select("*").eq("id", id).single();
       if (data) {
-        setValue({
-          slug: data.slug ?? "",
-          title: data.title ?? "",
-          subtitle: data.subtitle ?? "",
-          description: data.description ?? "",
-          author_id: data.author_id,
-          cover_url: data.cover_url ?? "",
-          price_cents: data.price_inr ?? 0,
-          status: data.status ?? "draft",
-        });
+        setValue(fromBookRow(data as Record<string, unknown>));
       }
       const { data: chs } = await sb.from("chapter").select("*").eq("book_id", id).order("idx");
       setChapters((chs ?? []) as Chapter[]);
@@ -63,17 +54,7 @@ function EditInner() {
     if (!sb || !id) return;
     setSaving(true);
     setError(null);
-    const payload = {
-      slug: value.slug,
-      title: value.title,
-      subtitle: value.subtitle || null,
-      description: value.description || null,
-      author_id: value.author_id,
-      cover_url: value.cover_url || null,
-      price_inr: value.price_cents,
-      status: value.status,
-      published_at: value.status === "published" ? new Date().toISOString() : null,
-    };
+    const payload = toBookPayload(value);
     const { error } = await sb.from("book").update(payload).eq("id", id);
     setSaving(false);
     if (error) {
