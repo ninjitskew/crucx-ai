@@ -1,0 +1,51 @@
+asin,super_category,title,author_name,price_usd,price_inr,rating,review_count,format,pages,published_date
+1594631931,Fiction,The Kite Runner,Khaled Hosseini,16.99,399,4.7,145000,Paperback,371,2004-04-27
+0375842209,Fiction,The Book Thief,Markus Zusak,12.99,299,4.7,95000,Paperback,552,2007-09-11
+0425232204,Fiction,The Help,Kathryn Stockett,16.99,399,4.8,110000,Paperback,464,2011-04-05
+0307588378,Fiction,Gone Girl,Gillian Flynn,17.00,399,4.2,165000,Paperback,422,2014-04-22
+1594634025,Fiction,The Girl on the Train,Paula Hawkins,17.00,399,4.2,110000,Paperback,336,2016-05-17
+0399587209,Fiction,Big Little Lies,Liane Moriarty,17.00,399,4.5,75000,Paperback,460,2015-05-26
+0735220697,Fiction,Eleanor Oliphant Is Completely Fine,Gail Honeyman,17.00,399,4.6,95000,Paperback,327,2018-05-08
+1984822187,Fiction,Normal People,Sally Rooney,17.00,399,4.0,45000,Paperback,273,2019-04-16
+0804172706,Fiction,A Little Life,Hanya Yanagihara,19.99,499,4.5,50000,Paperback,832,2016-01-26
+0451571614,Fiction,Beach Read,Emily Henry,15.00,349,4.4,95000,Paperback,384,2020-05-19
+0525536299,Fiction,The Vanishing Half,Brit Bennett,17.00,399,4.5,95000,Paperback,343,2021-04-27
+0375507256,Fiction,Cloud Atlas,David Mitchell,17.00,399,4.2,25000,Paperback,528,2004-08-17
+0316168815,Fiction,The Lovely Bones,Alice Sebold,17.99,399,4.5,65000,Paperback,328,2009-06-30
+0547928211,Fiction,The Fellowship of the Ring,J.R.R. Tolkien,17.99,499,4.8,95000,Paperback,432,2012-09-18
+0553593714,Fiction,A Game of Thrones,George R.R. Martin,9.99,499,4.7,110000,Paperback,864,2005-04-12
+0307474275,Fiction,The Da Vinci Code,Dan Brown,17.00,399,4.5,95000,Paperback,689,2009-03-31
+0345391802,Fiction,The Hitchhiker's Guide to the Galaxy,Douglas Adams,8.99,199,4.6,65000,Paperback,224,1995-09-27
+0060850523,Fiction,Brave New World,Aldous Huxley,17.99,299,4.3,45000,Paperback,268,2006-10-17
+1451626657,Fiction,Catch-22,Joseph Heller,17.00,399,4.5,45000,Paperback,453,2011-04-05
+0316769177,Fiction,The Catcher in the Rye,J.D. Salinger,9.99,299,4.0,95000,Paperback,277,1991-05-01
+0399590501,Non-fiction,Educated,Tara Westover,19.00,499,4.7,145000,Paperback,352,2018-02-20
+1524763136,Non-fiction,Becoming,Michelle Obama,19.99,599,4.8,130000,Hardcover,426,2018-11-13
+0399588175,Non-fiction,Born a Crime,Trevor Noah,17.00,399,4.8,95000,Paperback,304,2016-11-15
+0143127748,Non-fiction,The Body Keeps the Score,Bessel van der Kolk,19.00,499,4.8,70000,Paperback,464,2015-09-08
+0316017930,Non-fiction,Outliers,Malcolm Gladwell,18.99,399,4.7,35000,Paperback,320,2011-06-07
+0316346624,Non-fiction,The Tipping Point,Malcolm Gladwell,18.99,399,4.6,18000,Paperback,304,2002-01-07
+0307352153,Non-fiction,Quiet,Susan Cain,18.00,399,4.6,28000,Paperback,333,2013-01-29
+1524731656,Non-fiction,Bad Blood,John Carreyrou,18.99,499,4.8,30000,Hardcover,339,2018-05-21
+0316478520,Non-fiction,Talking to Strangers,Malcolm Gladwell,18.99,499,4.5,25000,Hardcover,386,2019-09-10
+0735214484,Non-fiction,Range,David Epstein,19.99,499,4.6,20000,Hardcover,352,2019-05-28
+1592408419,Non-fiction,Daring Greatly,Brené Brown,18.00,399,4.7,16000,Paperback,320,2015-11-17
+1501111108,Non-fiction,Grit,Angela Duckworth,18.99,499,4.6,18000,Paperback,352,2018-08-21
+1455586692,Non-fiction,Deep Work,Cal Newport,17.99,499,4.6,19000,Hardcover,304,2016-01-05
+0307465357,Non-fiction,The 4-Hour Workweek,Tim Ferriss,17.99,499,4.4,22000,Paperback,416,2009-12-15
+0804139296,Non-fiction,Zero to One,Peter Thiel,18.00,399,4.6,30000,Hardcover,224,2014-09-16
+0810993139,Children,Diary of a Wimpy Kid,Jeff Kinney,13.95,299,4.9,75000,Hardcover,224,2007-04-01
+0547928238,Children,The Hobbit,J.R.R. Tolkien,17.99,399,4.8,100000,Paperback,320,2012-09-18
+0064471055,Children,"The Lion, the Witch and the Wardrobe",C.S. Lewis,8.99,199,4.8,28000,Paperback,208,1994-07-06
+0142410365,Children,James and the Giant Peach,Roald Dahl,8.99,199,4.8,14000,Paperback,176,2007-08-16
+0142410381,Children,The BFG,Roald Dahl,8.99,249,4.8,12000,Paperback,208,2007-08-16
+0375869026,Children,Wonder,R.J. Palacio,8.99,299,4.9,85000,Hardcover,315,2012-02-14
+072324770X,Children,The Tale of Peter Rabbit,Beatrix Potter,7.99,199,4.8,8000,Hardcover,56,2002-09-30
+039480016X,Children,Green Eggs and Ham,Dr. Seuss,9.99,199,4.9,32000,Hardcover,62,1960-08-12
+0394800010,Children,The Cat in the Hat,Dr. Seuss,9.99,199,4.9,28000,Hardcover,61,1957-03-12
+0142403873,Children,The Gruffalo,Julia Donaldson,7.99,249,4.9,18000,Paperback,32,2006-08-31
+1449486975,Shorts,Home Body,Rupi Kaur,14.99,299,4.7,35000,Paperback,192,2020-11-17
+1449494269,Shorts,Pillow Thoughts,Courtney Peppernell,14.99,299,4.5,15000,Paperback,288,2017-12-12
+1449494676,Shorts,The Witch Doesn't Burn in This One,Amanda Lovelace,14.99,299,4.4,5000,Paperback,208,2018-03-06
+0156012197,Shorts,The Little Prince,Antoine de Saint-Exupéry,9.99,199,4.8,80000,Paperback,96,2000-06-29
+0679720200,Shorts,The Stranger,Albert Camus,14.95,299,4.5,14000,Paperback,123,1989-03-13
