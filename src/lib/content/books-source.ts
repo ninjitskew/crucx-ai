@@ -22,6 +22,9 @@ interface DbBookRow {
   price_usd: number | string | null;
   currency_primary: string | null;
   super_category: string | null;
+  primary_category: string | null;
+  secondary_categories: string[] | null;
+  sub_category: string | null;
   bestseller_rank: number | null;
   rating: number | string | null;
   review_count: number | null;
@@ -74,8 +77,11 @@ function normalizeDbBook(row: DbBookRow): Book {
     subtitle: row.subtitle ?? undefined,
     authorSlug,
     authorName: row.author_name ?? undefined,
-    category: row.super_category ?? "Other",
+    category: row.primary_category ?? row.super_category ?? "Other",
     superCategory: row.super_category ?? undefined,
+    primaryCategory: row.primary_category ?? undefined,
+    secondaryCategories: row.secondary_categories ?? undefined,
+    subCategory: row.sub_category ?? undefined,
     // Curated affiliate books (those with an ASIN) are all Amazon bestsellers
     // by definition. Books with high review counts also qualify.
     tags: row.asin || (row.review_count != null && row.review_count >= 10000)

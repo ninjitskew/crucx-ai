@@ -6,6 +6,7 @@ import { getSupabase } from "@/lib/supabase";
 import { useAdmin } from "@/lib/hooks/useAdmin";
 import { logAudit } from "@/lib/admin";
 import { extractAsin, detectStore, buildCanonicalUrl, SUPER_CATEGORIES } from "@/lib/amazon";
+import { CATEGORY_NAMES } from "@/lib/categories";
 
 /**
  * Bulk CSV import for affiliate books.
@@ -24,6 +25,9 @@ type ParsedRow = {
   amazon_in_url: string | null;
   amazon_com_url: string | null;
   super_category: string | null;
+  primary_category: string | null;
+  secondary_categories: string[];
+  sub_category: string | null;
   title: string;
   author_name: string;
   price_usd: number | null;
@@ -111,6 +115,24 @@ function parseRow(raw: Record<string, string>, lineNum: number): ParsedRow {
     issues.push(`super_category '${superCat}' not in ${SUPER_CATEGORIES.join("|")}`);
   }
 
+  const primaryCat = (raw.primary_category || "").trim();
+  if (primaryCat && !CATEGORY_NAMES.includes(primaryCat)) {
+    issues.push(`primary_category '${primaryCat}' not in valid list`);
+  }
+  const subCat = (raw.sub_category || "").trim();
+  const secondaryRaw = (raw.secondary_categories || "").trim();
+  const secondaryList = secondaryRaw
+    ? secondaryRaw
+        .split("|")
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : [];
+  for (const s of secondaryList) {
+    if (!CATEGORY_NAMES.includes(s)) {
+      issues.push(`secondary_category '${s}' not in valid list`);
+    }
+  }
+
   const toNum = (s: string | undefined): number | null => {
     if (!s) return null;
     const n = Number(s);
@@ -124,6 +146,9 @@ function parseRow(raw: Record<string, string>, lineNum: number): ParsedRow {
     amazon_in_url: inUrl,
     amazon_com_url: comUrl,
     super_category: superCat || null,
+    primary_category: primaryCat || null,
+    secondary_categories: secondaryList,
+    sub_category: subCat || null,
     title: (raw.title || "").trim(),
     author_name: (raw.author_name || raw.author || "").trim(),
     price_usd: toNum(raw.price_usd),
@@ -196,6 +221,9 @@ export default function AdminBooksImportPage() {
       price_usd: r.price_usd,
       currency_primary: "USD",
       super_category: r.super_category,
+      primary_category: r.primary_category,
+      secondary_categories: r.secondary_categories,
+      sub_category: r.sub_category,
       rating: r.rating,
       review_count: r.review_count,
       format: r.format || null,
@@ -258,14 +286,20 @@ export default function AdminBooksImportPage() {
         <div className="mt-3 space-y-2 text-xs text-text-secondary">
           <p>First row must be a header. All columns are lowercase.</p>
           <pre className="overflow-x-auto rounded-lg bg-bg-secondary p-3 font-mono text-[11px] leading-relaxed text-text-primary">
-{`asin,amazon_url,super_category,title,author_name,price_usd,price_inr,rating,review_count,format,pages,cover_url,published_date
-B0G3QKKXFD,https://www.amazon.in/dp/B0G3QKKXFD/,Shorts,Whispers in the Rain,Anika Agarwal,1.99,158,5.0,2,Paperback,268,,2025-11-25
-0593189647,https://www.amazon.com/dp/0593189647/,Non-fiction,Atomic Habits,James Clear,17.98,,4.8,153421,Hardcover,320,,2018-10-16`}
+{`asin,primary_category,sub_category,secondary_categories,title,author_name,price_usd,price_inr,rating,review_count,format,pages,cover_url,published_date
+B0G3QKKXFD,Poetry & Shorts,Poetry,,Whispers in the Rain,Anika Agarwal,1.99,158,5.0,2,Paperback,268,,2025-11-25
+0735211299,Self-Mastery & Productivity,Habits,Psychology & Big Ideas,Atomic Habits,James Clear,17.99,499,4.8,175000,Hardcover,320,,2018-10-16
+0141439513,Fiction & Literature,Classics,Romance,Pride and Prejudice,Jane Austen,8.99,199,4.6,95000,Paperback,480,,2002-12-31`}
           </pre>
           <p>
-            <strong>Required:</strong> <code>asin</code>. <strong>Recommended:</strong> <code>amazon_url</code>,{" "}
-            <code>super_category</code> (one of Fiction, Non-fiction, Children, Shorts), <code>title</code>,{" "}
+            <strong>Required:</strong> <code>asin</code>.{" "}
+            <strong>Recommended:</strong> <code>primary_category</code> (one of {CATEGORY_NAMES.length}{" "}
+            valid names — see Admin → Books → Edit dropdowns), <code>sub_category</code>, <code>title</code>,{" "}
             <code>author_name</code>, <code>price_usd</code>.
+          </p>
+          <p>
+            <strong>secondary_categories</strong>: pipe-separated, e.g.{" "}
+            <code>Romance|Mystery &amp; Thriller</code>.
           </p>
         </div>
       </details>

@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@/lib/hooks/useUser";
 import { getSupabase } from "@/lib/supabase";
-import books from "@/content/books.json";
+import booksJson from "@/content/books.json";
 import EmptyState from "@/components/marketplace/EmptyState";
 import type { Book } from "@/lib/types";
+
+const books = booksJson as Book[];
 
 export default function ReaderLibraryPage() {
   const { user, loading } = useUser();

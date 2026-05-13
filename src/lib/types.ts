@@ -5,7 +5,10 @@ export interface Book {
   authorSlug: string;
   authorName?: string;              // free-text, for affiliate books
   category: string;
-  superCategory?: string;           // Fiction | Non-fiction | Children | Shorts
+  superCategory?: string;           // legacy: Fiction | Non-fiction | Children | Shorts
+  primaryCategory?: string;         // v2: one of the 10 canonical categories (see lib/categories)
+  secondaryCategories?: string[];   // v2: 0-2 additional category memberships
+  subCategory?: string;             // v2: chip filter within the primary category page
   tags?: string[];
   cover: string;
   coverUrl?: string;                // explicit Amazon image URL (preferred over `cover`)

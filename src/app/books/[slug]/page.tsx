@@ -9,6 +9,7 @@ import SamplePreviewLauncher from "@/components/marketplace/SamplePreviewLaunche
 import ReviewComposer from "@/components/marketplace/ReviewComposer";
 import FollowAuthorButton from "@/components/marketplace/FollowAuthorButton";
 import BookViewTracker from "@/components/marketplace/BookViewTracker";
+import { slugifyCategory } from "@/lib/categories";
 
 export async function generateStaticParams() {
   const books = await getAllBooks();
@@ -35,20 +36,30 @@ export default async function BookDetailPage({ params }: { params: Promise<{ slu
     .filter(
       (b) =>
         b.slug !== book.slug &&
-        (b.category === book.category || (b.superCategory && b.superCategory === book.superCategory))
+        (b.primaryCategory
+          ? b.primaryCategory === book.primaryCategory ||
+            (book.secondaryCategories ?? []).includes(b.primaryCategory)
+          : b.category === book.category)
     )
     .slice(0, 8);
+
+  // Breadcrumb: Marketplace / {Primary Category} / {Sub Category} / {Title}
+  const primaryName = book.primaryCategory ?? book.category;
+  const primarySlug = book.primaryCategory ? slugifyCategory(book.primaryCategory) : null;
+  const breadcrumbItems: { label: string; href?: string }[] = [
+    { label: "Marketplace", href: "/books/" },
+    {
+      label: primaryName,
+      href: primarySlug ? `/marketplace/${primarySlug}/1/` : undefined,
+    },
+  ];
+  if (book.subCategory) breadcrumbItems.push({ label: book.subCategory });
+  breadcrumbItems.push({ label: book.title });
 
   return (
     <main className="min-h-screen bg-bg-primary pt-24">
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <Breadcrumbs
-          items={[
-            { label: "Marketplace", href: "/books/" },
-            { label: book.category, href: `/marketplace/${book.category.toLowerCase().replace(/[^a-z0-9]+/g, "-")}/1/` },
-            { label: book.title },
-          ]}
-        />
+        <Breadcrumbs items={breadcrumbItems} />
 
         <BookViewTracker slug={book.slug} />
 
@@ -68,7 +79,10 @@ export default async function BookDetailPage({ params }: { params: Promise<{ slu
           {/* Details */}
           <div>
             <p className="text-xs uppercase tracking-wider text-text-muted">
-              {book.superCategory ?? book.category}
+              {book.primaryCategory ?? book.superCategory ?? book.category}
+              {book.subCategory && (
+                <span className="ml-2 text-text-secondary">· {book.subCategory}</span>
+              )}
             </p>
             <h1 className="mt-2 font-[family-name:var(--font-space-grotesk)] text-4xl font-bold text-text-primary">
               {book.title}

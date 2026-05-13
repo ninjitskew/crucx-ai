@@ -1,5 +1,8 @@
 import Link from "next/link";
-import books from "@/content/books.json";
+import booksJson from "@/content/books.json";
+import type { Book } from "@/lib/types";
+
+const books = booksJson as Book[];
 
 export default function ReaderDiscoverPage() {
   return (

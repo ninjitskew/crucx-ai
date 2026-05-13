@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getSupabase } from "@/lib/supabase";
 import { SUPER_CATEGORIES, AMAZON_FORMATS } from "@/lib/amazon";
+import { CATEGORIES, getCategoryByName } from "@/lib/categories";
 import FormField, { inputClasses } from "./FormField";
 import ImageUrlInput from "./ImageUrlInput";
 
@@ -29,6 +30,9 @@ export interface BookFormValue {
 
   // catalog
   super_category: string;
+  primary_category: string;
+  secondary_categories: string[];
+  sub_category: string;
   bestseller_rank: number | null;
   cover_url: string;
   rating: number | null;
@@ -55,6 +59,9 @@ export const emptyBook: BookFormValue = {
   price_usd: 0,
   currency_primary: "USD",
   super_category: "",
+  primary_category: "",
+  secondary_categories: [],
+  sub_category: "",
   bestseller_rank: null,
   cover_url: "",
   rating: null,
@@ -113,7 +120,7 @@ export default function BookForm({ value, onChange }: Props) {
               placeholder="B0G3QKKXFD"
             />
           </FormField>
-          <FormField label="Super-category" hint="Top-level marketplace bucket">
+          <FormField label="Super-category (legacy)" hint="Kept for backward compat; primary category below is what's used in browse">
             <select
               className={inputClasses}
               value={value.super_category}
@@ -145,6 +152,9 @@ export default function BookForm({ value, onChange }: Props) {
           </FormField>
         </div>
       </section>
+
+      {/* Category taxonomy v2 */}
+      <CategorySection value={value} onChange={onChange} />
 
       {/* Identity */}
       <section>
@@ -323,6 +333,98 @@ export default function BookForm({ value, onChange }: Props) {
   );
 }
 
+/** Primary + secondary + sub-category controls. */
+function CategorySection({
+  value,
+  onChange,
+}: {
+  value: BookFormValue;
+  onChange: (v: BookFormValue) => void;
+}) {
+  const set = <K extends keyof BookFormValue>(k: K, v: BookFormValue[K]) =>
+    onChange({ ...value, [k]: v });
+
+  const primaryDef = useMemo(() => getCategoryByName(value.primary_category), [value.primary_category]);
+  const allCategories = CATEGORIES.map((c) => c.name);
+  const secondaryOptions = allCategories.filter((c) => c !== value.primary_category);
+
+  function toggleSecondary(name: string) {
+    const next = value.secondary_categories.includes(name)
+      ? value.secondary_categories.filter((c) => c !== name)
+      : [...value.secondary_categories, name].slice(0, 3);
+    set("secondary_categories", next);
+  }
+
+  return (
+    <section>
+      <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-text-muted">
+        Category taxonomy
+      </h3>
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <FormField label="Primary category" hint="The main shelf this book lives on">
+          <select
+            className={inputClasses}
+            value={value.primary_category}
+            onChange={(e) => {
+              set("primary_category", e.target.value);
+              // Reset sub-category if it doesn't belong to the new primary
+              const newDef = getCategoryByName(e.target.value);
+              if (newDef && !newDef.subCategories.includes(value.sub_category)) {
+                set("sub_category", "");
+              }
+            }}
+          >
+            <option value="">— Select —</option>
+            {allCategories.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </FormField>
+        <FormField label="Sub-category" hint="Chip filter within the primary category page">
+          <select
+            className={inputClasses}
+            value={value.sub_category}
+            onChange={(e) => set("sub_category", e.target.value)}
+            disabled={!primaryDef}
+          >
+            <option value="">— Select —</option>
+            {primaryDef?.subCategories.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </FormField>
+        <div className="md:col-span-2">
+          <FormField label="Secondary categories" hint="Up to 3. The book also surfaces on these category pages.">
+            <div className="flex flex-wrap gap-2">
+              {secondaryOptions.map((c) => {
+                const selected = value.secondary_categories.includes(c);
+                return (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => toggleSecondary(c)}
+                    className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+                      selected
+                        ? "bg-gradient-to-r from-accent-blue to-accent-purple text-white"
+                        : "border border-border-default text-text-secondary hover:text-text-primary"
+                    }`}
+                  >
+                    {c}
+                  </button>
+                );
+              })}
+            </div>
+          </FormField>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /** Shape a BookFormValue into the DB row payload for insert/update. */
 export function toBookPayload(v: BookFormValue) {
   return {
@@ -339,6 +441,9 @@ export function toBookPayload(v: BookFormValue) {
     price_usd: v.price_usd,
     currency_primary: v.currency_primary,
     super_category: v.super_category || null,
+    primary_category: v.primary_category || null,
+    secondary_categories: v.secondary_categories,
+    sub_category: v.sub_category || null,
     bestseller_rank: v.bestseller_rank,
     cover_url: v.cover_url || null,
     rating: v.rating,
@@ -370,6 +475,11 @@ export function fromBookRow(row: Record<string, unknown>): BookFormValue {
     price_usd: pickNum(row.price_usd) ?? 0,
     currency_primary: (row.currency_primary as "USD" | "INR") ?? "USD",
     super_category: pickStr(row.super_category),
+    primary_category: pickStr(row.primary_category),
+    secondary_categories: Array.isArray(row.secondary_categories)
+      ? (row.secondary_categories as string[])
+      : [],
+    sub_category: pickStr(row.sub_category),
     bestseller_rank: pickNum(row.bestseller_rank),
     cover_url: pickStr(row.cover_url),
     rating: pickNum(row.rating),

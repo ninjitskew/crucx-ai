@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import authors from "@/content/authors.json";
-import books from "@/content/books.json";
+import booksJson from "@/content/books.json";
+import type { Book } from "@/lib/types";
+
+const books = booksJson as Book[];
 
 export function generateStaticParams() {
   return authors.map((a) => ({ slug: a.slug }));

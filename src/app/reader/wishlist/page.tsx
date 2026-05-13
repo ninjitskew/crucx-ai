@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@/lib/hooks/useUser";
 import { getSupabase } from "@/lib/supabase";
-import books from "@/content/books.json";
+import booksJson from "@/content/books.json";
 import authors from "@/content/authors.json";
+
+const books = booksJson as Book[];
 import BookCard from "@/components/marketplace/BookCard";
 import EmptyState from "@/components/marketplace/EmptyState";
 import type { Book, Author } from "@/lib/types";

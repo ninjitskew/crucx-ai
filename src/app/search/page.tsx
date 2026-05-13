@@ -3,8 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import Link from "next/link";
-import books from "@/content/books.json";
+import booksJson from "@/content/books.json";
 import authors from "@/content/authors.json";
+
+const books = booksJson as Book[];
 import BookCard from "@/components/marketplace/BookCard";
 import type { Book, Author } from "@/lib/types";
 

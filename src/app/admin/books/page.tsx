@@ -7,7 +7,7 @@ import { useAdmin } from "@/lib/hooks/useAdmin";
 import { logAudit } from "@/lib/admin";
 import DataTable, { Column } from "@/components/admin/DataTable";
 import StatusBadge from "@/components/admin/StatusBadge";
-import { SUPER_CATEGORIES } from "@/lib/amazon";
+import { CATEGORY_NAMES } from "@/lib/categories";
 
 interface BookRow extends Record<string, unknown> {
   id: string;
@@ -18,6 +18,8 @@ interface BookRow extends Record<string, unknown> {
   cover_url: string | null;
   asin: string | null;
   super_category: string | null;
+  primary_category: string | null;
+  sub_category: string | null;
   bestseller_rank: number | null;
   price_usd: number | null;
   rating: number | null;
@@ -54,7 +56,7 @@ export default function AdminBooksPage() {
   const filtered = useMemo(() => {
     return rows.filter((r) => {
       if (statusFilter !== "all" && r.status !== statusFilter) return false;
-      if (categoryFilter !== "all" && r.super_category !== categoryFilter) return false;
+      if (categoryFilter !== "all" && r.primary_category !== categoryFilter) return false;
       return true;
     });
   }, [rows, statusFilter, categoryFilter]);
@@ -146,12 +148,17 @@ export default function AdminBooksPage() {
     {
       key: "category",
       header: "Category",
-      sortValue: (r) => r.super_category ?? "",
+      sortValue: (r) => r.primary_category ?? r.super_category ?? "",
       render: (r) =>
-        r.super_category ? (
-          <span className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] uppercase tracking-wider text-text-secondary">
-            {r.super_category}
-          </span>
+        r.primary_category || r.super_category ? (
+          <div>
+            <span className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] uppercase tracking-wider text-text-secondary">
+              {r.primary_category ?? r.super_category}
+            </span>
+            {r.sub_category && (
+              <p className="mt-1 text-[10px] text-text-muted">{r.sub_category}</p>
+            )}
+          </div>
         ) : (
           <span className="text-xs text-text-muted">—</span>
         ),
@@ -250,7 +257,7 @@ export default function AdminBooksPage() {
           >
             All categories
           </button>
-          {SUPER_CATEGORIES.map((c) => (
+          {CATEGORY_NAMES.map((c) => (
             <button
               key={c}
               onClick={() => setCategoryFilter(c)}
