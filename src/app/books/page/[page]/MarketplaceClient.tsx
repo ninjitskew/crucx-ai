@@ -10,6 +10,7 @@ import Breadcrumbs from "@/components/marketplace/Breadcrumbs";
 import EmptyState from "@/components/marketplace/EmptyState";
 import { SearchIcon } from "@/components/ui/Icons";
 import { PAGE_SIZE } from "@/lib/pagination";
+import { CATEGORIES } from "@/lib/categories";
 import type { Book, Author } from "@/lib/types";
 
 interface Props {
@@ -31,21 +32,27 @@ export default function MarketplaceClient({ pageNum, books, authors }: Props) {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, []);
 
+  // Canonical 10 categories with counts (primary + secondary membership)
   const categories = useMemo(() => {
-    const set = new Set<string>();
-    books.forEach((b) => set.add(b.category));
-    return ["all", ...Array.from(set).sort()];
+    const inCat = (b: Book, name: string) =>
+      b.primaryCategory === name || (b.secondaryCategories ?? []).includes(name);
+    const present = CATEGORIES
+      .map((c) => ({ name: c.name, count: books.filter((b) => inCat(b, c.name)).length }))
+      .filter((c) => c.count > 0);
+    return [{ name: "all", count: books.length }, ...present];
   }, [books]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
+    const inCat = (b: Book, name: string) =>
+      b.primaryCategory === name || (b.secondaryCategories ?? []).includes(name);
     let r = books.filter(
       (b) =>
         (b.status ?? "published") === "published" &&
         b.price <= priceRange[1] &&
         (b.rating ?? 0) >= minRating &&
         (format === "any" || (b.format ?? "eBook") === format) &&
-        (category === "all" || b.category === category) &&
+        (category === "all" || inCat(b, category)) &&
         (!q ||
           b.title.toLowerCase().includes(q) ||
           (b.description ?? "").toLowerCase().includes(q) ||
@@ -105,15 +112,16 @@ export default function MarketplaceClient({ pageNum, books, authors }: Props) {
           <div className="mt-6 -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:justify-center sm:px-0">
             {categories.map((c) => (
               <button
-                key={c}
-                onClick={() => setCategory(c)}
-                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium capitalize transition-all duration-200 ${
-                  category === c
+                key={c.name}
+                onClick={() => setCategory(c.name)}
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                  category === c.name
                     ? "bg-gradient-to-r from-accent-purple to-accent-pink text-white shadow-lg shadow-accent-purple/20"
                     : "border border-border-default bg-bg-card text-text-secondary hover:border-accent-purple/40 hover:text-text-primary"
                 }`}
               >
-                {c === "all" ? "All" : c}
+                {c.name === "all" ? "All" : c.name}{" "}
+                <span className="ml-1 text-[10px] opacity-70">({c.count})</span>
               </button>
             ))}
           </div>
