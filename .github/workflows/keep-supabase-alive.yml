@@ -7,6 +7,10 @@ on:
     - cron: "17 6 * * *"
   workflow_dispatch: # Allow manual trigger
 
+# Needed by the keepalive-workflow step below so it can push an empty commit.
+permissions:
+  contents: write
+
 jobs:
   ping:
     runs-on: ubuntu-latest
@@ -76,3 +80,20 @@ jobs:
             -H "Prefer: resolution=merge-duplicates,return=minimal" \
             --data-binary @-
           echo "FX rates refreshed for $NOW"
+
+  # Prevent GitHub from disabling this scheduled workflow after 60 days of
+  # repo inactivity. Pushes a single empty commit when the repo has been
+  # quiet for ~50 days. Zero maintenance.
+  keepalive:
+    runs-on: ubuntu-latest
+    needs: ping
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/keepalive-workflow@v2
+        with:
+          committer_username: "crucx-keepalive[bot]"
+          committer_email: "crucx-keepalive@users.noreply.github.com"
+          commit_message: "chore: keepalive scheduled workflows"
+          time_elapsed: "50"  # push empty commit after 50 days of quiet
